@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FX Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>FX Dashboard (KRW / RUB / USD)</h1>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>USD/RUB</h2>
+    <div id="usdRub">-</div>
+  </div>
+
+  <div class="card">
+    <h2>KRW/RUB</h2>
+    <div id="krwRub">-</div>
+  </div>
+
+  <div class="card">
+    <h2>100만원 → RUB</h2>
+    <div id="krwToRub">-</div>
+  </div>
+
+</div>
+
+<canvas id="chart" height="100"></canvas>
+
+<script src="app.js"></script>
+
+</body>
+</html>
