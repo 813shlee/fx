@@ -3,41 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FX Decision System</title>
-
+<title>FX Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body {
-  margin:0;
   background:#0f172a;
   color:white;
-  font-family:Arial;
+  font-family:Arial, sans-serif;
+  margin:0;
   text-align:center;
 }
-
-.container {
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
+.container { max-width:1200px; margin:auto; padding:24px; }
 h1 { margin-bottom:8px; }
+.sub { color:#94a3b8; margin-bottom:14px; }
 
-#result {
-  padding:12px 18px;
-  display:inline-block;
+#signal {
+  padding:12px 22px;
   border-radius:999px;
+  display:inline-block;
+  margin-bottom:18px;
+  font-weight:bold;
+}
+.buy { background:#14532d; color:#bbf7d0; }
+.hold { background:#713f12; color:#fde68a; }
+.wait { background:#7f1d1d; color:#fecaca; }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+.card, .panel {
   background:#1e293b;
-  margin:15px 0;
+  padding:18px;
+  border-radius:14px;
+}
+.card h3 {
+  color:#94a3b8;
+  margin:0 0 8px;
+  font-size:15px;
+}
+.value { font-size:23px; font-weight:bold; }
+.note { color:#cbd5e1; font-size:13px; margin-top:6px; }
+
+.recommend {
+  background:#111827;
+  border-radius:14px;
+  padding:16px;
+  margin:18px 0;
+  font-size:17px;
   font-weight:bold;
 }
 
-.box {
-  background:#1e293b;
-  padding:16px;
-  margin:10px;
-  border-radius:12px;
+.chart-box {
+  height:520px;
+  background:#111827;
+  border-radius:18px;
+  padding:24px 42px;
+  margin:20px 0;
 }
 
 input {
@@ -47,120 +72,314 @@ input {
   margin:6px;
   width:220px;
 }
-
 button {
-  padding:10px 16px;
-  border:none;
-  border-radius:10px;
   background:#2563eb;
   color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
   cursor:pointer;
+  margin:10px;
 }
 
-.grid {
+table {
+  width:100%;
+  border-collapse:collapse;
+  background:#111827;
+  margin-top:20px;
+  border-radius:12px;
+  overflow:hidden;
+}
+th, td {
+  padding:10px;
+  border-bottom:1px solid #334155;
+}
+th { color:#94a3b8; }
+
+.result-grid {
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:14px;
 }
 
-.big {
-  font-size:22px;
-  font-weight:bold;
+@media(max-width:900px){
+  .grid { grid-template-columns:repeat(2,1fr); }
+  .result-grid { grid-template-columns:1fr; }
+  .chart-box { height:440px; padding:18px; }
 }
-
-.note {
-  color:#94a3b8;
-  font-size:13px;
+@media(max-width:520px){
+  .grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<h1>FX Decision Engine</h1>
-
-<div class="box">
-  <div>실제 환전소/은행 환율 입력</div>
-
-  <input id="usdRub" placeholder="USD → RUB (예: 73.8)">
-  <input id="rubKrw" placeholder="RUB → KRW (예: 20.9)">
-
-  <br>
-  <button onclick="calc()">환전 비교 분석</button>
-</div>
-
-<div id="result">입력 대기 중</div>
+<h1>FX Dashboard</h1>
+<div class="sub" id="today">Loading...</div>
+<div id="signal">Loading...</div>
 
 <div class="grid">
-
-  <div class="box">
-    <div>USD → KRW (경로 환산)</div>
-    <div class="big" id="usdToKrw">-</div>
-    <div class="note">USD → RUB → KRW</div>
+  <div class="card">
+    <h3>BOK USD/KRW</h3>
+    <div class="value" id="bokUsdKrw">-</div>
+    <div class="note">한국은행 원/달러</div>
   </div>
 
-  <div class="box">
-    <div>KRW → USD (경로 환산)</div>
-    <div class="big" id="krwToUsd">-</div>
-    <div class="note">KRW → RUB → USD</div>
+  <div class="card">
+    <h3>CBR USD/RUB</h3>
+    <div class="value" id="usdRub">-</div>
+    <div class="note">러시아 중앙은행</div>
   </div>
 
+  <div class="card">
+    <h3>CALC KRW/RUB</h3>
+    <div class="value" id="krwRub">-</div>
+    <div class="note">1 RUB = 몇 원</div>
+  </div>
+
+  <div class="card">
+    <h3>150만원 → RUB</h3>
+    <div class="value" id="krwToRub">-</div>
+    <div class="note" id="krwPeak">-</div>
+  </div>
+
+  <div class="card">
+    <h3>1000 USD → RUB</h3>
+    <div class="value" id="usdToRub">-</div>
+    <div class="note" id="usdPeak">-</div>
+  </div>
 </div>
+
+<div class="recommend" id="recommendation">판단 중...</div>
+
+<div class="chart-box">
+  <canvas id="chart"></canvas>
+</div>
+
+<div class="panel">
+  <h2>실제 환전소/은행 환율 비교</h2>
+  <div class="note">
+    실제로 받을 수 있는 환율을 입력하면, 원화로 바꾸는 것이 나은지 달러로 바꾸는 것이 나은지 비교합니다.
+  </div>
+
+  <input id="realUsdRub" type="number" step="0.0001" placeholder="1 USD → RUB 예: 73.80">
+  <input id="realRubKrw" type="number" step="0.0001" placeholder="1 RUB → KRW 예: 20.90">
+
+  <br>
+  <button onclick="calculateRealExchange()">실제 환율로 비교</button>
+
+  <div class="result-grid">
+    <div class="card">
+      <h3>150만원 → RUB</h3>
+      <div class="value" id="realKrwToRub">-</div>
+      <div class="note">입력한 RUB/KRW 기준</div>
+    </div>
+
+    <div class="card">
+      <h3>1000 USD → RUB</h3>
+      <div class="value" id="realUsdToRub">-</div>
+      <div class="note">입력한 USD/RUB 기준</div>
+    </div>
+  </div>
+
+  <div class="recommend" id="realDecision">실제 환율을 입력해주세요.</div>
+</div>
+
+<button onclick="location.href='?v=' + Date.now()">🔄 최신 데이터 다시 불러오기</button>
+
+<table>
+<thead>
+<tr>
+  <th>Date</th>
+  <th>BOK USD/KRW</th>
+  <th>CBR USD/RUB</th>
+  <th>CALC KRW/RUB</th>
+  <th>150만원→RUB</th>
+  <th>1000USD→RUB</th>
+  <th>Score</th>
+  <th>Signal</th>
+</tr>
+</thead>
+<tbody id="table"></tbody>
+</table>
 
 </div>
 
 <script>
+let latestGlobal = null;
 
-function calc() {
+function fmt(n, d=2){
+  return Number(n).toLocaleString("ko-KR", {
+    minimumFractionDigits:d,
+    maximumFractionDigits:d
+  });
+}
+function intFmt(n){
+  return Math.round(Number(n)).toLocaleString("ko-KR");
+}
 
-  const usdRub = parseFloat(document.getElementById("usdRub").value);
-  const rubKrw = parseFloat(document.getElementById("rubKrw").value);
+fetch("rates.json?v=" + Date.now())
+.then(r => r.json())
+.then(data => {
+  const latest = data[data.length - 1];
+  latestGlobal = latest;
 
-  if (!usdRub || !rubKrw) {
-    document.getElementById("result").innerText = "값을 입력해주세요";
+  const latestBokUsdKrw = Number(latest.bok_usd_krw);
+  const latestUsdRub = Number(latest.cbr_usd_rub ?? latest.usd_rub);
+  const latestKrwRub = Number(latest.calc_rub_krw ?? latest.krw_rub);
+  const latestKrwToRub = Number(latest.krw_1_5m_to_rub ?? 1500000 / latestKrwRub);
+  const latestUsdToRub = Number(latest.usd_1000_to_rub ?? 1000 * latestUsdRub);
+
+  document.getElementById("today").innerText = "기준일: " + latest.date;
+  document.getElementById("bokUsdKrw").innerText = fmt(latestBokUsdKrw, 2);
+  document.getElementById("usdRub").innerText = fmt(latestUsdRub, 2);
+  document.getElementById("krwRub").innerText = fmt(latestKrwRub, 2);
+  document.getElementById("krwToRub").innerText = intFmt(latestKrwToRub) + " RUB";
+  document.getElementById("usdToRub").innerText = intFmt(latestUsdToRub) + " RUB";
+
+  const krwValues = data.map(d => Number(d.krw_1_5m_to_rub ?? 1500000 / (d.calc_rub_krw ?? d.krw_rub)));
+  const usdValues = data.map(d => Number(d.usd_1000_to_rub ?? 1000 * (d.cbr_usd_rub ?? d.usd_rub)));
+
+  const krwHigh = Math.max(...krwValues);
+  const usdHigh = Math.max(...usdValues);
+
+  const krwPct = latestKrwToRub / krwHigh * 100;
+  const usdPct = latestUsdToRub / usdHigh * 100;
+
+  document.getElementById("krwPeak").innerText = "10일 최고 대비 " + fmt(krwPct, 1) + "%";
+  document.getElementById("usdPeak").innerText = "10일 최고 대비 " + fmt(usdPct, 1) + "%";
+
+  const signalBox = document.getElementById("signal");
+  const score = Number(latest.score ?? 60);
+  const signal = latest.signal ?? "HOLD";
+
+  signalBox.className = "";
+  if (signal.includes("BUY") || score >= 70) signalBox.classList.add("buy");
+  else if (signal.includes("WAIT") || score < 50) signalBox.classList.add("wait");
+  else signalBox.classList.add("hold");
+
+  signalBox.innerText = `${signal} | Score: ${score}`;
+
+  let rec = "";
+  if (krwPct > usdPct + 1) {
+    rec = "🇰🇷 중앙은행 기준으로는 원화 환전력이 상대적으로 우위입니다.";
+  } else if (usdPct > krwPct + 1) {
+    rec = "💵 중앙은행 기준으로는 달러 환전력이 상대적으로 우위입니다.";
+  } else {
+    rec = "⚖️ 중앙은행 기준으로는 원화와 달러 환전 매력이 비슷합니다.";
+  }
+  document.getElementById("recommendation").innerText = rec;
+
+  new Chart(document.getElementById("chart"), {
+    type:"line",
+    data:{
+      labels:data.map(d=>d.date),
+      datasets:[
+        {
+          label:"CBR USD/RUB",
+          data:data.map(d=>Number(d.cbr_usd_rub ?? d.usd_rub)),
+          borderColor:"#f59e0b",
+          backgroundColor:"#f59e0b",
+          tension:0.3,
+          pointRadius:5
+        },
+        {
+          label:"CALC KRW/RUB",
+          data:data.map(d=>Number(d.calc_rub_krw ?? d.krw_rub)),
+          borderColor:"#06b6d4",
+          backgroundColor:"#06b6d4",
+          yAxisID:"y1",
+          tension:0.3,
+          pointRadius:5
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      layout:{padding:{left:40,right:50,top:20,bottom:20}},
+      plugins:{
+        legend:{labels:{color:"#e5e7eb"}},
+        tooltip:{enabled:true}
+      },
+      scales:{
+        x:{ticks:{color:"#cbd5e1", maxRotation:45, minRotation:45}},
+        y:{position:"left", ticks:{color:"#f59e0b"}},
+        y1:{position:"right", ticks:{color:"#06b6d4"}, grid:{drawOnChartArea:false}}
+      }
+    }
+  });
+
+  const table = document.getElementById("table");
+  table.innerHTML = "";
+
+  data.slice().reverse().forEach(d => {
+    const bok = Number(d.bok_usd_krw);
+    const usdRub = Number(d.cbr_usd_rub ?? d.usd_rub);
+    const krwRub = Number(d.calc_rub_krw ?? d.krw_rub);
+    const krwToRub = Number(d.krw_1_5m_to_rub ?? 1500000 / krwRub);
+    const usdToRub = Number(d.usd_1000_to_rub ?? 1000 * usdRub);
+
+    table.innerHTML += `
+      <tr>
+        <td>${d.date}</td>
+        <td>${fmt(bok,2)}</td>
+        <td>${fmt(usdRub,2)}</td>
+        <td>${fmt(krwRub,2)}</td>
+        <td>${intFmt(krwToRub)}</td>
+        <td>${intFmt(usdToRub)}</td>
+        <td>${d.score ?? "-"}</td>
+        <td>${d.signal ?? "-"}</td>
+      </tr>
+    `;
+  });
+});
+
+function calculateRealExchange() {
+  if (!latestGlobal) return;
+
+  const realUsdRub = Number(document.getElementById("realUsdRub").value);
+  const realRubKrw = Number(document.getElementById("realRubKrw").value);
+
+  if (!realUsdRub || !realRubKrw) {
+    document.getElementById("realDecision").innerText =
+      "실제 USD/RUB와 RUB/KRW 값을 모두 입력해주세요.";
     return;
   }
 
-  // =========================
-  // 1. KRW 기준 150만원 → USD → RUB
-  // =========================
-  const krw = 1500000;
+  const realKrwToRub = 1500000 / realRubKrw;
+  const realUsdToRub = 1000 * realUsdRub;
 
-  const usd = krw / rubKrw / usdRub;
+  document.getElementById("realKrwToRub").innerText =
+    intFmt(realKrwToRub) + " RUB";
 
-  const krwFromUsd = usd * usdRub * rubKrw;
+  document.getElementById("realUsdToRub").innerText =
+    intFmt(realUsdToRub) + " RUB";
 
-  // =========================
-  // 2. USD 기준 1000 → KRW
-  // =========================
-  const usdAmount = 1000;
+  const krwAdvantage = realKrwToRub / 1500000;
+  const usdAdvantage = realUsdToRub / 1000;
 
-  const rubFromUsd = usdAmount * usdRub;
-  const krwFromUsd2 = rubFromUsd * rubKrw;
+  let decision = "";
 
-  // =========================
-  // 3. 비교
-  // =========================
-  document.getElementById("usdToKrw").innerText =
-    Math.round(krwFromUsd2).toLocaleString();
-
-  document.getElementById("krwToUsd").innerText =
-    usd.toFixed(2);
-
-  let result = "";
-
-  if (krwFromUsd2 > krw) {
-    result = "💵 USD 경로가 유리 (달러 보유/환전 추천)";
+  if (realKrwToRub > realUsdToRub * 1.01) {
+    decision = "🇰🇷 실제 입력 환율 기준: 원화 → 루블 환전이 더 유리합니다.";
+  } else if (realUsdToRub > realKrwToRub * 1.01) {
+    decision = "💵 실제 입력 환율 기준: 달러 → 루블 환전이 더 유리합니다.";
   } else {
-    result = "🇰🇷 KRW 경로가 유리 (원화 유지/환전 추천)";
+    decision = "⚖️ 실제 입력 환율 기준: 원화와 달러 환전 매력이 거의 비슷합니다.";
   }
 
-  document.getElementById("result").innerText = result;
+  decision += `<br><br>
+    비교 기준:<br>
+    150만원 → ${intFmt(realKrwToRub)} RUB<br>
+    1000 USD → ${intFmt(realUsdToRub)} RUB
+  `;
+
+  document.getElementById("realDecision").innerHTML = decision;
 }
-
 </script>
-
 </body>
 </html>
