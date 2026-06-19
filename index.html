@@ -26,8 +26,8 @@ h1 { margin-bottom:8px; }
 
 #signal {
   padding:12px 18px;
-  display:inline-block;
   border-radius:999px;
+  display:inline-block;
   margin:12px 0;
   font-weight:bold;
 }
@@ -67,17 +67,44 @@ h1 { margin-bottom:8px; }
   margin:20px 0;
 }
 
+/* =========================
+   TABLE (데이터 영역)
+========================= */
+.table-box {
+  margin-top:10px;
+  background:#111827;
+  border-radius:16px;
+  padding:10px;
+  overflow-x:auto;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td {
+  padding:10px;
+  border-bottom:1px solid #334155;
+  font-size:14px;
+}
+
+th { color:#94a3b8; }
+
+/* =========================
+   CALC PANEL (맨 아래)
+========================= */
 .panel {
   background:#1e293b;
-  padding:16px;
-  border-radius:12px;
+  padding:18px;
+  border-radius:14px;
   margin-top:20px;
 }
 
 input {
   padding:10px;
   margin:6px;
-  width:220px;
+  width:240px;
   border-radius:8px;
   border:none;
 }
@@ -89,12 +116,23 @@ button {
   background:#2563eb;
   color:white;
   cursor:pointer;
+  margin-top:8px;
 }
 
 .result {
-  margin-top:12px;
+  margin-top:14px;
+  font-size:16px;
+  text-align:left;
+  line-height:1.6;
+  background:#0b1220;
+  padding:12px;
+  border-radius:10px;
+}
+
+.section-title {
+  margin-top:30px;
   font-size:18px;
-  font-weight:bold;
+  color:#cbd5e1;
 }
 </style>
 </head>
@@ -134,12 +172,47 @@ button {
   </div>
 </div>
 
+<!-- 그래프 -->
 <div class="chart">
-<canvas id="chart"></canvas>
+  <canvas id="chart"></canvas>
 </div>
 
+<!-- =========================
+     데이터 테이블 (그래프 아래)
+========================= -->
+<div class="section-title">📊 일자별 데이터</div>
+
+<div class="table-box">
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>BOK USD/KRW</th>
+        <th>CBR USD/RUB</th>
+        <th>KRW/RUB</th>
+        <th>150만원→RUB</th>
+        <th>1000USD→RUB</th>
+        <th>Score</th>
+        <th>Signal</th>
+      </tr>
+    </thead>
+    <tbody id="table"></tbody>
+  </table>
+</div>
+
+<!-- =========================
+     환전 계산 (맨 아래)
+========================= -->
+<div class="section-title">💱 실제 환전소 비교 (100,000 RUB 기준)</div>
+
 <div class="panel">
-  <h2>실제 환전소 비교 (100,000 RUB 기준)</h2>
+
+  <div style="color:#cbd5e1; font-size:14px; margin-bottom:10px;">
+    계산 구조:<br>
+    ① KRW 경로 = 100,000 × RUB/KRW<br>
+    ② USD 경로 = (100,000 ÷ USD/RUB) × BOK USD/KRW<br>
+    ③ 더 작은 KRW 비용이 유리
+  </div>
 
   <input id="usd" placeholder="USD → RUB (예: 73.8)">
   <input id="rub" placeholder="RUB → KRW (예: 20.9)">
@@ -148,7 +221,8 @@ button {
 
   <button onclick="calc()">비교 실행</button>
 
-  <div class="result" id="result">입력 대기</div>
+  <div class="result" id="result">입력 대기 중</div>
+
 </div>
 
 </div>
@@ -178,6 +252,7 @@ fetch("rates.json?v=" + Date.now())
   document.getElementById("usdToRub").innerText =
     Math.round(1000 * usdRub).toLocaleString();
 
+  // 그래프
   new Chart(document.getElementById("chart"), {
     type:"line",
     data:{
@@ -202,6 +277,25 @@ fetch("rates.json?v=" + Date.now())
     }
   });
 
+  // 테이블
+  const table = document.getElementById("table");
+  table.innerHTML = "";
+
+  data.slice().reverse().forEach(d => {
+    table.innerHTML += `
+      <tr>
+        <td>${d.date}</td>
+        <td>${d.bok_usd_krw.toFixed(2)}</td>
+        <td>${d.cbr_usd_rub.toFixed(2)}</td>
+        <td>${d.calc_rub_krw.toFixed(2)}</td>
+        <td>${Math.round(1500000 / d.calc_rub_krw).toLocaleString()}</td>
+        <td>${Math.round(1000 * d.cbr_usd_rub).toLocaleString()}</td>
+        <td>${d.score}</td>
+        <td>${d.signal}</td>
+      </tr>
+    `;
+  });
+
 });
 
 function calc() {
@@ -210,7 +304,8 @@ function calc() {
   const rubKrw = Number(document.getElementById("rub").value);
 
   if (!usdRub || !rubKrw) {
-    document.getElementById("result").innerText = "값 입력 필요";
+    document.getElementById("result").innerHTML =
+      "값을 입력해주세요";
     return;
   }
 
@@ -223,17 +318,18 @@ function calc() {
   const usdNeeded = target / usdRub;
   const usdCost = usdNeeded * latestGlobal.bok_usd_krw;
 
-  let result = "";
+  let html = "";
+
+  html += `KRW 경로 비용: <b>${Math.round(krwCost).toLocaleString()}</b> KRW<br>`;
+  html += `USD 경로 비용: <b>${Math.round(usdCost).toLocaleString()}</b> KRW<br><br>`;
 
   if (krwCost < usdCost) {
-    result = "🇰🇷 원화 경로가 유리";
+    html += "🇰🇷 원화 경로가 유리합니다";
   } else {
-    result = "💵 달러 경로가 유리";
+    html += "💵 달러 경로가 유리합니다";
   }
 
-  result += ` | 차이: ${Math.abs(krwCost - usdCost).toLocaleString()} KRW`;
-
-  document.getElementById("result").innerText = result;
+  document.getElementById("result").innerHTML = html;
 }
 
 </script>
