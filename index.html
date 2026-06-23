@@ -231,7 +231,7 @@ fetch("rates.json?v=" + Date.now())
 .then(r => r.json())
 .then(data => {
 
-  const latest = data.at(-1);
+  const latest = data[data.length - 1];
   latestGlobal = latest;
 
   const bok = Number(latest.bok_usd_krw);
