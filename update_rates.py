@@ -71,12 +71,12 @@ def score_system(calc_series, current):
 
 def signal(score):
     if score >= 80:
-        return "🟢 STRONG BUY"
+        return "▲ BEST"
     if score >= 65:
-        return "🟢 BUY"
+        return "● GOOD"
     if score >= 50:
-        return "🟡 HOLD"
-    return "🔴 WAIT"
+        return "■ NORMAL"
+    return "▼ BAD"
 
 
 def last_bok_value_on_or_before(bok_map, iso_date):
@@ -91,8 +91,10 @@ def main():
     today = date.today()
     bok = fetch_bok_usd_krw(days_back=80)
     recent_dates = [(today - timedelta(days=i)).isoformat() for i in range(9, -1, -1)]
+
     rows = []
     calc_series = []
+
     for dt in recent_dates:
         bok_usd_krw, bok_source_date = last_bok_value_on_or_before(bok, dt)
         cbr_usd_rub = fetch_cbr_usd_rub(dt)
@@ -108,10 +110,12 @@ def main():
             "usd_rub": round(cbr_usd_rub, 6),
             "krw_rub": round(calc_rub_krw, 6),
         })
+
     for i, row in enumerate(rows):
-        s = score_system(calc_series[: i + 1], row["calc_rub_krw"])
+        s = score_system(calc_series[:i + 1], row["calc_rub_krw"])
         row["score"] = s
         row["signal"] = signal(s)
+
     OUT.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote {OUT} with {len(rows)} rows.")
     print(f"Latest date: {rows[-1]['date']}")
