@@ -16,17 +16,8 @@ body {
   text-align:center;
   font-size:17px;
 }
-
-.container {
-  max-width:1200px;
-  margin:auto;
-  padding:24px;
-}
-
-h1 {
-  font-size:32px;
-  margin-bottom:8px;
-}
+.container { max-width:1200px; margin:auto; padding:24px; }
+h1 { font-size:32px; margin-bottom:8px; }
 
 #signal {
   padding:12px 22px;
@@ -53,17 +44,12 @@ h1 {
   padding:18px;
   border-radius:14px;
 }
-
 .card h3 {
   margin:0 0 10px;
   color:#94a3b8;
   font-size:17px;
 }
-
-.value {
-  font-size:26px;
-  font-weight:bold;
-}
+.value { font-size:26px; font-weight:bold; }
 
 .chart {
   height:540px;
@@ -88,20 +74,13 @@ h1 {
   overflow-x:auto;
 }
 
-table {
-  width:100%;
-  border-collapse:collapse;
-}
-
+table { width:100%; border-collapse:collapse; }
 th, td {
   padding:12px;
   border-bottom:1px solid #334155;
   font-size:16px;
 }
-
-th {
-  color:#94a3b8;
-}
+th { color:#94a3b8; }
 
 .panel {
   background:#1e293b;
@@ -173,6 +152,8 @@ button {
   <div class="card"><h3>1 RUB = ? KRW (CALC)</h3><div class="value" id="krwRub">-</div></div>
   <div class="card"><h3>150만원 → ? RUB</h3><div class="value" id="krwToRub">-</div></div>
 </div>
+
+<div id="calcGuide" class="result">오늘의 기준 환율 계산 중...</div>
 
 <div class="chart">
 <canvas id="chart"></canvas>
@@ -260,9 +241,16 @@ fetch("rates.json?v=" + Date.now())
   document.getElementById("bok").innerText = fmt(bok,2);
   document.getElementById("usdRubCard").innerText = fmt(usdRub,2);
   document.getElementById("krwRub").innerText = fmt(krwRub,2);
+  document.getElementById("krwToRub").innerText = intFmt(1500000 / krwRub);
 
-  document.getElementById("krwToRub").innerText =
-    intFmt(1500000 / krwRub);
+  document.getElementById("calcGuide").innerHTML = `
+    <b>📌 오늘의 원화 환전 기준선</b><br><br>
+    현재 계산 환율(CALC): <b>1 RUB = ${fmt(krwRub,4)} KRW</b><br><br>
+    실제 환전소에서 제시하는 <b>RUB → KRW</b> 환율과 비교하세요.<br><br>
+    🟢 <b>${fmt(krwRub,4)}보다 낮으면</b> → 원화로 루블 환전 유리<br>
+    🟡 <b>${fmt(krwRub,4)} 부근이면</b> → 보통 수준<br>
+    🔴 <b>${fmt(krwRub,4)}보다 높으면</b> → 원화로 루블 환전 불리
+  `;
 
   const signalBox = document.getElementById("signal");
   const score = Number(latest.score ?? 60);
@@ -302,13 +290,9 @@ fetch("rates.json?v=" + Date.now())
     options:{
       responsive:true,
       maintainAspectRatio:false,
-      layout:{
-        padding:{left:30,right:40,top:20,bottom:20}
-      },
+      layout:{ padding:{left:30,right:40,top:20,bottom:20} },
       plugins:{
-        legend:{
-          labels:{color:"#e5e7eb", font:{size:15}}
-        },
+        legend:{ labels:{color:"#e5e7eb", font:{size:15}} },
         tooltip:{enabled:true}
       },
       scales:{
