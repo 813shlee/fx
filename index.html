@@ -147,6 +147,10 @@ button {
   border-radius:12px;
 }
 
+.result strong {
+  color:#e5e7eb;
+}
+
 @media(max-width:900px){
   .grid{grid-template-columns:repeat(2,1fr);}
   .chart{height:440px;padding:16px;}
@@ -170,12 +174,12 @@ button {
 <div class="grid">
   <div class="card"><h3>BOK USD/KRW</h3><div class="value" id="bok">-</div></div>
   <div class="card"><h3>CBR USD/RUB</h3><div class="value" id="usdRubCard">-</div></div>
-  <div class="card"><h3>KRW/RUB</h3><div class="value" id="krwRub">-</div></div>
+  <div class="card"><h3>CALC KRW/RUB</h3><div class="value" id="krwRub">-</div></div>
   <div class="card"><h3>150만원 → RUB</h3><div class="value" id="krwToRub">-</div></div>
   <div class="card"><h3>1000 USD → RUB</h3><div class="value" id="usdToRub">-</div></div>
 </div>
 
-<div id="centralDecision" class="result">중앙은행 기준 판단 중...</div>
+<div id="centralDecision" class="result">중앙은행 기준 계산 중...</div>
 
 <div class="chart">
 <canvas id="chart"></canvas>
@@ -190,7 +194,7 @@ button {
   <th>Date</th>
   <th>BOK USD/KRW</th>
   <th>CBR USD/RUB</th>
-  <th>KRW/RUB</th>
+  <th>CALC KRW/RUB</th>
   <th>150만원→RUB</th>
   <th>1000USD→RUB</th>
   <th>Score</th>
@@ -207,9 +211,10 @@ button {
 
   <div class="formula">
     계산 기준: <b>100,000 RUB</b><br>
-    ① 원화 경로 = 100,000 × RUB/KRW<br>
-    ② 달러 경로 = (100,000 ÷ USD/RUB) × BOK USD/KRW<br>
-    ③ 더 낮은 KRW 비용이 유리
+    ① 원화 경로 = 100,000 × 실제 RUB/KRW<br>
+    ② 달러 경로 = (100,000 ÷ 실제 USD/RUB) × BOK USD/KRW<br>
+    ③ 더 낮은 KRW 비용이 드는 경로가 유리<br>
+    ※ USD/KRW는 BOK 기준값을 사용합니다.
   </div>
 
   <input id="realUsdRub" type="number" step="0.0001" placeholder="USD → RUB 예: 73.8">
@@ -283,27 +288,28 @@ fetch("rates.json?v=" + Date.now())
 
   const targetRub = 100000;
 
-  const centralKrwCost = targetRub * krwRub;
+  const centralKrwRub = bok / usdRub;
+  const centralCostKrw = targetRub * centralKrwRub;
   const centralUsdNeeded = targetRub / usdRub;
-  const centralUsdCostInKrw = centralUsdNeeded * bok;
-  const centralDiff = Math.abs(centralKrwCost - centralUsdCostInKrw);
-
-  let centralText = "";
-
-  if (centralKrwCost < centralUsdCostInKrw) {
-    centralText = "🇰🇷 중앙은행 기준: 원화 → 루블 경로가 더 유리";
-  } else if (centralUsdCostInKrw < centralKrwCost) {
-    centralText = "💵 중앙은행 기준: 달러 → 루블 경로가 더 유리";
-  } else {
-    centralText = "⚖️ 중앙은행 기준: 두 경로가 거의 동일";
-  }
+  const centralUsdCostKrw = centralUsdNeeded * bok;
 
   document.getElementById("centralDecision").innerHTML = `
-    <b>${centralText}</b><br>
-    목표 100,000 RUB 기준<br>
-    원화 경로 비용: <b>${intFmt(centralKrwCost)} KRW</b><br>
-    달러 경로 비용: <b>${intFmt(centralUsdCostInKrw)} KRW</b><br>
-    차이: <b>${intFmt(centralDiff)} KRW</b>
+    <strong>중앙은행 기준 교차환율</strong><br>
+    BOK USD/KRW ÷ CBR USD/RUB = ${fmt(bok,2)} ÷ ${fmt(usdRub,4)}
+    = <b>${fmt(centralKrwRub,4)} KRW/RUB</b><br><br>
+
+    목표 100,000 RUB 기준 중앙은행 이론값:<br>
+    100,000 RUB × ${fmt(centralKrwRub,4)} KRW/RUB
+    = <b>${intFmt(centralCostKrw)} KRW</b><br><br>
+
+    같은 계산을 달러 경로로 풀면:<br>
+    100,000 RUB ÷ ${fmt(usdRub,4)} USD/RUB
+    = ${fmt(centralUsdNeeded,2)} USD<br>
+    ${fmt(centralUsdNeeded,2)} USD × ${fmt(bok,2)} KRW/USD
+    = <b>${intFmt(centralUsdCostKrw)} KRW</b><br><br>
+
+    ※ 중앙은행 기준에서는 두 경로가 같은 교차환율에서 출발하므로 원화/달러 경로 차이가 거의 0에 수렴합니다.<br>
+    실제 유불리는 아래의 <b>환전소 입력값</b>으로 판단하는 것이 맞습니다.
   `;
 
   new Chart(document.getElementById("chart"), {
@@ -393,11 +399,12 @@ function calc(){
   }
 
   const target = 100000;
+  const bokUsdKrw = Number(latestGlobal.bok_usd_krw);
 
   const krwCost = target * rubKrw;
 
   const usdNeeded = target / usdRub;
-  const usdCost = usdNeeded * latestGlobal.bok_usd_krw;
+  const usdCost = usdNeeded * bokUsdKrw;
 
   const diff = Math.abs(krwCost - usdCost);
   const diffPct = diff / Math.min(krwCost, usdCost) * 100;
@@ -422,14 +429,13 @@ function calc(){
     <b>② 달러 경로</b><br>
     100,000 RUB ÷ ${fmt(usdRub,4)} USD/RUB<br>
     = ${fmt(usdNeeded,2)} USD<br>
-    ${fmt(usdNeeded,2)} USD × BOK ${fmt(latestGlobal.bok_usd_krw,2)} KRW/USD<br>
+    ${fmt(usdNeeded,2)} USD × BOK ${fmt(bokUsdKrw,2)} KRW/USD<br>
     = <b>${intFmt(usdCost)} KRW</b><br><br>
 
     <b>결론:</b> ${decision}<br>
     <b>차이:</b> ${intFmt(diff)} KRW (${fmt(diffPct,2)}%)
   `;
 }
-
 </script>
 
 </body>
