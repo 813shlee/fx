@@ -124,20 +124,21 @@ def fetch_naver_rub_krw():
     r.encoding = "euc-kr"
     html = r.text
 
-    m = re.search(
-        r'class=["\']no_today["\'][\s\S]*?<span class=["\']blind["\']>\s*([0-9,.]+)\s*</span>',
-        html,
-    )
+    # 🔥 핵심: 테이블 숫자 전부 추출 후 첫 번째 사용
+    matches = re.findall(r'([0-9]{1,3}(?:,[0-9]{3})*\.[0-9]+)', html)
 
-    if not m:
-        raise RuntimeError("NAVER RUB/KRW parsing failed")
+    if not matches:
+        raise RuntimeError("NAVER RUB/KRW parsing failed - no numbers found")
 
-    naver = parse_kr_number(m.group(1))
+    value = parse_kr_number(matches[0])
 
-    if naver < 5 or naver > 50:
-        raise RuntimeError(f"NAVER RUB/KRW looks wrong: {naver}")
+    # 안전장치
+    if value < 5 or value > 50:
+        raise RuntimeError(f"NAVER RUB/KRW out of range: {value}")
 
-    return naver
+    return value
+
+
 
 
 # ----------------------------
