@@ -13,7 +13,8 @@ if not BOK_API_KEY:
     raise SystemExit("BOK_API_KEY environment variable is missing.")
 
 OUT = Path("rates.json")
-NAVER_URL = "https://finance.naver.com/marketindex/exchangeDetail.naver"
+NAVER_URL = "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn"
+
 
 
 def parse_kr_number(value):
@@ -94,7 +95,6 @@ def fetch_cbr_usd_rub(iso_date):
 
     raise RuntimeError(f"USD not found in CBR response for {iso_date}")
 
-
 def fetch_naver_rub_krw():
     headers = {
         "User-Agent": "Mozilla/5.0",
@@ -109,16 +109,17 @@ def fetch_naver_rub_krw():
     )
     r.raise_for_status()
     r.encoding = "euc-kr"
-
     html = r.text
 
+    # 일별 환율 표의 첫 번째 숫자값을 가져옴
+    # 예: <td class="num">20.12</td>
     m = re.search(
-        r'class=["\']no_today["\'][\s\S]*?<span class=["\']blind["\']>\s*([0-9,.]+)\s*</span>',
+        r'<td[^>]*class=["\']num["\'][^>]*>\s*([0-9,.]+)\s*</td>',
         html,
     )
 
     if not m:
-        raise RuntimeError("NAVER RUB/KRW parsing failed.")
+        raise RuntimeError("NAVER daily RUB/KRW parsing failed.")
 
     naver = parse_kr_number(m.group(1))
 
@@ -126,7 +127,6 @@ def fetch_naver_rub_krw():
         raise RuntimeError(f"NAVER RUB/KRW looks wrong: {naver}")
 
     return naver
-
 
 def score_system(calc_series, current):
     recent = calc_series[-10:]
