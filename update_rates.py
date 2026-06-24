@@ -3,6 +3,7 @@ import json
 import math
 import os
 import re
+import time
 import signal as os_signal
 import xml.etree.ElementTree as ET
 from datetime import date, timedelta
@@ -65,8 +66,50 @@ def to_float(value):
     return float(text)
 
 
-def get_url(url, **kwargs):
-    return requests.get(url, timeout=kwargs.pop("timeout", (5, 12)), **kwargs)
+def get_url(url, retries=3, backoff=2, **kwargs):
+    """외부 사이트 요청을 재시도한다.
+
+    GitHub Actions에서는 BOK/CBR/Naver가 가끔 연결 단계에서 timeout이 나므로
+    한 번 실패했다고 바로 전체 작업을 중단하지 않게 한다.
+    """
+    timeout = kwargs.pop("timeout", (10, 20))
+    last_exc = None
+    for attempt in range(1, retries + 1):
+        try:
+            return requests.get(url, timeout=timeout, **kwargs)
+        except requests.exceptions.RequestException as exc:
+            last_exc = exc
+            print(f"Warning: request failed ({attempt}/{retries}): {url} -> {exc}")
+            if attempt < retries:
+                time.sleep(backoff * attempt)
+    raise last_exc
+
+
+def load_existing_rows():
+    if not OUT.exists():
+        return []
+    try:
+        return json.loads(OUT.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"Warning: failed to read existing rates.json: {exc}")
+        return []
+
+
+def build_bok_map_from_existing(rows):
+    result = {}
+    for row in rows:
+        d = row.get("bok_source_date") or row.get("date")
+        v = row.get("bok_usd_krw")
+        if d and v:
+            result[d] = float(v)
+    return dict(sorted(result.items()))
+
+
+def existing_value_for_date(rows, iso_date, field):
+    candidates = [r for r in rows if r.get("date") <= iso_date and r.get(field) not in (None, "")]
+    if not candidates:
+        return None
+    return candidates[-1].get(field)
 
 
 def fetch_bok_usd_krw(days_back=80):
@@ -76,7 +119,7 @@ def fetch_bok_usd_krw(days_back=80):
         f"https://ecos.bok.or.kr/api/StatisticSearch/{BOK_API_KEY}/json/kr/1/5000/731Y001/D/"
         f"{start:%Y%m%d}/{end:%Y%m%d}"
     )
-    r = get_url(url, timeout=(5, 20))
+    r = get_url(url, timeout=(12, 25), retries=4, backoff=3)
     r.raise_for_status()
     payload = r.json()
     if "StatisticSearch" not in payload:
@@ -98,7 +141,7 @@ def fetch_cbr_usd_rub(iso_date):
     y, m, d = iso_date.split("-")
     date_req = f"{d}/{m}/{y}"
     url = "https://www.cbr.ru/scripts/XML_daily_eng.asp"
-    r = get_url(url, params={"date_req": date_req}, timeout=(5, 12))
+    r = get_url(url, params={"date_req": date_req}, timeout=(8, 15), retries=3, backoff=2)
     r.raise_for_status()
     root = ET.fromstring(r.content)
     for valute in root.findall("Valute"):
@@ -261,7 +304,16 @@ def last_bok_value_on_or_before(bok_map, iso_date):
 
 def main():
     today = date.today()
-    bok = fetch_bok_usd_krw(days_back=80)
+    existing_rows = load_existing_rows()
+
+    try:
+        bok = fetch_bok_usd_krw(days_back=80)
+    except Exception as exc:
+        print(f"Warning: failed to fetch BOK USD/KRW. Falling back to existing rates.json: {exc}")
+        bok = build_bok_map_from_existing(existing_rows)
+        if not bok:
+            raise RuntimeError("BOK fetch failed and no existing rates.json fallback is available.")
+
     recent_dates = [(today - timedelta(days=i)).isoformat() for i in range(9, -1, -1)]
 
     try:
@@ -276,7 +328,14 @@ def main():
 
     for dt in recent_dates:
         bok_usd_krw, bok_source_date = last_bok_value_on_or_before(bok, dt)
-        cbr_usd_rub = fetch_cbr_usd_rub(dt)
+        try:
+            cbr_usd_rub = fetch_cbr_usd_rub(dt)
+        except Exception as exc:
+            old_cbr = existing_value_for_date(existing_rows, dt, "cbr_usd_rub") or existing_value_for_date(existing_rows, dt, "usd_rub")
+            if old_cbr is None:
+                raise
+            print(f"Warning: failed to fetch CBR for {dt}. Using existing value {old_cbr}: {exc}")
+            cbr_usd_rub = float(old_cbr)
         calc_rub_krw = bok_usd_krw / cbr_usd_rub
         calc_series.append(calc_rub_krw)
         row = {
