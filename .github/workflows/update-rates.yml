@@ -15,6 +15,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -34,7 +35,7 @@ jobs:
       - name: Update rates.json
         env:
           BOK_API_KEY: ${{ secrets.BOK_API_KEY }}
-        run: python update_rates.py
+        run: python -u update_rates.py
 
       - name: Commit and push rates.json
         run: |
