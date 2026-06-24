@@ -197,15 +197,21 @@ def fetch_naver_rub_krw():
         try:
             r2 = get_url(NAVER_DAILY_URL, headers=HEADERS, timeout=(5, 8))
             r2.raise_for_status()
-            text2 = _clean_text(_decode_response(r2))
-            m2 = re.search(r"(20\d{2}\.\d{2}\.\d{2})\s+([0-9][0-9,\.]*)", text2)
+            raw2 = _decode_response(r2)
+            # 일별 페이지 테이블의 첫 행: 날짜 다음 첫 숫자값을 우선 사용
+            m2 = re.search(r"<tr[^>]*>[\s\S]*?<td[^>]*class=[\"']date[\"'][^>]*>\s*(20\d{2}\.\d{2}\.\d{2})\s*</td>[\s\S]*?<td[^>]*>\s*([0-9][0-9,\.]*)\s*</td>", raw2, flags=re.I)
             if m2:
                 result["naver_rub_krw"] = to_float(m2.group(2))
         except Exception as exc:
             print(f"Warning: Naver daily fallback failed: {exc}")
 
-    # 최후 보정: 현찰/송금 값이 있는데 대표 환율만 없으면 송금 평균으로 근사하지 않고 null 유지
-    # 대표 환율을 임의 계산하면 원자료와 달라질 수 있으므로 화면에서 '대표 환율 없음'으로 표시하게 둔다.
+    # 대표 환율 보정
+    # 네이버 HTML 구조가 바뀌면 상세/일별 페이지에서 시간(예: 13:23)이 1323처럼 잘못 잡히는 경우가 있다.
+    # RUB/KRW가 100을 넘는 것은 비정상으로 보고, 송금 보내실 때/받으실 때 평균값으로 보정한다.
+    # 예: 21.34 / 19.90이면 약 20.62원으로, 네이버 대표값 20.61에 가장 가깝다.
+    if (result["naver_rub_krw"] is None or result["naver_rub_krw"] > 100) and result["naver_send"] and result["naver_receive"]:
+        result["naver_rub_krw"] = round((result["naver_send"] + result["naver_receive"]) / 2, 4)
+
     return result
 
 
