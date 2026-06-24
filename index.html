@@ -205,8 +205,6 @@ function renderNaverInfo(latest){
       <div class="naver-row"><span class="naver-label">현찰 파실 때</span><span class="naver-value">${fmt(latest.naver_cash_sell,2)}</span></div>
       <div class="naver-row"><span class="naver-label">송금 보내실 때</span><span class="naver-value">${fmt(latest.naver_send,2)}</span></div>
       <div class="naver-row"><span class="naver-label">송금 받으실 때</span><span class="naver-value">${fmt(latest.naver_receive,2)}</span></div>
-      <div class="naver-row"><span class="naver-label">T/C 사실 때</span><span class="naver-value">${latest.naver_tc_buy ?? "N/A"}</span></div>
-      <div class="naver-row"><span class="naver-label">외화수표 파실 때</span><span class="naver-value">${latest.naver_check_sell ?? "N/A"}</span></div>
     </div>
 
     <div class="naver-note">
