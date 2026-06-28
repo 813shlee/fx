@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-06-18",
-    "bok_source_date": "2026-06-18",
-    "bok_usd_krw": 1512.8,
-    "cbr_usd_rub": 72.7479,
-    "calc_rub_krw": 20.795102,
-    "krw_1_5m_to_rub": 72132,
-    "usd_rub": 72.7479,
-    "krw_rub": 20.795102,
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-06-19",
     "bok_source_date": "2026-06-19",
     "bok_usd_krw": 1523.4,
@@ -20,7 +8,7 @@
     "krw_1_5m_to_rub": 72232,
     "usd_rub": 73.3591,
     "krw_rub": 20.76634,
-    "score": 61,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -32,7 +20,7 @@
     "krw_1_5m_to_rub": 72311,
     "usd_rub": 73.439,
     "krw_rub": 20.743747,
-    "score": 62,
+    "score": 61,
     "signal": "■ NORMAL"
   },
   {
@@ -56,7 +44,7 @@
     "krw_1_5m_to_rub": 71764,
     "usd_rub": 73.439,
     "krw_rub": 20.901701,
-    "score": 54,
+    "score": 53,
     "signal": "■ NORMAL"
   },
   {
@@ -68,7 +56,7 @@
     "krw_1_5m_to_rub": 72050,
     "usd_rub": 73.765,
     "krw_rub": 20.818817,
-    "score": 59,
+    "score": 58,
     "signal": "■ NORMAL"
   },
   {
@@ -100,7 +88,7 @@
     "naver_receive": 19.66,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 70,
+    "score": 69,
     "signal": "● GOOD"
   },
   {
@@ -120,7 +108,7 @@
     "naver_receive": 18.79,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 76,
+    "score": 75,
     "signal": "● GOOD"
   },
   {
@@ -140,7 +128,27 @@
     "naver_receive": 18.79,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 94,
+    "score": 93,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-06-28",
+    "bok_source_date": "2026-06-26",
+    "bok_usd_krw": 1545.3,
+    "cbr_usd_rub": 77.0611,
+    "calc_rub_krw": 20.052919,
+    "krw_1_5m_to_rub": 74802,
+    "usd_rub": 77.0611,
+    "krw_rub": 20.052919,
+    "naver_rub_krw": 19.5,
+    "naver_time": "2026.06.26 22:08",
+    "naver_cash_buy": 21.35,
+    "naver_cash_sell": 16.09,
+    "naver_send": 20.18,
+    "naver_receive": 18.82,
+    "naver_tc_buy": "N/A",
+    "naver_check_sell": "N/A",
+    "score": 91,
     "signal": "▲ BEST"
   }
 ]
