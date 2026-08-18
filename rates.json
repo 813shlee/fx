@@ -1,25 +1,5 @@
 [
   {
-    "date": "2026-08-08",
-    "bok_source_date": "2026-08-07",
-    "bok_usd_krw": 1418.8,
-    "cbr_usd_rub": 82.1665,
-    "calc_rub_krw": 17.267378,
-    "krw_1_5m_to_rub": 86869,
-    "usd_rub": 82.1665,
-    "krw_rub": 17.267378,
-    "naver_rub_krw": 17.23,
-    "naver_time": "2026.08.07 21:12",
-    "naver_cash_buy": 18.86,
-    "naver_cash_sell": 14.22,
-    "naver_send": 17.83,
-    "naver_receive": 16.63,
-    "naver_tc_buy": "N/A",
-    "naver_check_sell": "N/A",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-08-09",
     "bok_source_date": "2026-08-07",
     "bok_usd_krw": 1418.8,
@@ -96,7 +76,7 @@
     "naver_receive": 16.52,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 64,
+    "score": 63,
     "signal": "■ NORMAL"
   },
   {
@@ -116,7 +96,7 @@
     "naver_receive": 16.29,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 71,
+    "score": 70,
     "signal": "● GOOD"
   },
   {
@@ -136,7 +116,7 @@
     "naver_receive": 16.27,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 79,
+    "score": 78,
     "signal": "● GOOD"
   },
   {
@@ -156,7 +136,7 @@
     "naver_receive": 16.26,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 87,
+    "score": 85,
     "signal": "▲ BEST"
   },
   {
@@ -176,7 +156,7 @@
     "naver_receive": 16.26,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 85,
+    "score": 83,
     "signal": "▲ BEST"
   },
   {
@@ -196,7 +176,27 @@
     "naver_receive": 16.07,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 83,
+    "score": 81,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-08-18",
+    "bok_source_date": "2026-08-18",
+    "bok_usd_krw": 1415.2,
+    "cbr_usd_rub": 85.0136,
+    "calc_rub_krw": 16.646748,
+    "krw_1_5m_to_rub": 90108,
+    "usd_rub": 85.0136,
+    "krw_rub": 16.646748,
+    "naver_rub_krw": 16.62,
+    "naver_time": "2026.08.18 13:33",
+    "naver_cash_buy": 18.19,
+    "naver_cash_sell": 13.72,
+    "naver_send": 17.2,
+    "naver_receive": 16.04,
+    "naver_tc_buy": "N/A",
+    "naver_check_sell": "N/A",
+    "score": 86,
     "signal": "▲ BEST"
   }
 ]
