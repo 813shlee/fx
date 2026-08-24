@@ -1,25 +1,5 @@
 [
   {
-    "date": "2026-08-14",
-    "bok_source_date": "2026-08-14",
-    "bok_usd_krw": 1414.9,
-    "cbr_usd_rub": 83.8058,
-    "calc_rub_krw": 16.88308,
-    "krw_1_5m_to_rub": 88846,
-    "usd_rub": 83.8058,
-    "krw_rub": 16.88308,
-    "naver_rub_krw": 16.85,
-    "naver_time": "2026.08.14 21:01",
-    "naver_cash_buy": 18.45,
-    "naver_cash_sell": 13.91,
-    "naver_send": 17.43,
-    "naver_receive": 16.27,
-    "naver_tc_buy": "N/A",
-    "naver_check_sell": "N/A",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-08-15",
     "bok_source_date": "2026-08-14",
     "bok_usd_krw": 1414.9,
@@ -36,8 +16,8 @@
     "naver_receive": 16.26,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 66,
-    "signal": "● GOOD"
+    "score": 60,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-08-16",
@@ -56,8 +36,8 @@
     "naver_receive": 16.26,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 65,
-    "signal": "● GOOD"
+    "score": 60,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-08-17",
@@ -76,7 +56,7 @@
     "naver_receive": 16.07,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 64,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -96,7 +76,7 @@
     "naver_receive": 16.01,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 69,
+    "score": 65,
     "signal": "● GOOD"
   },
   {
@@ -116,7 +96,7 @@
     "naver_receive": 15.76,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 73,
+    "score": 69,
     "signal": "● GOOD"
   },
   {
@@ -136,7 +116,7 @@
     "naver_receive": 16.08,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 77,
+    "score": 73,
     "signal": "● GOOD"
   },
   {
@@ -156,7 +136,7 @@
     "naver_receive": 16.01,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 61,
+    "score": 57,
     "signal": "■ NORMAL"
   },
   {
@@ -176,7 +156,7 @@
     "naver_receive": 16.2,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 56,
+    "score": 52,
     "signal": "■ NORMAL"
   },
   {
@@ -196,7 +176,27 @@
     "naver_receive": 16.2,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 56,
+    "score": 53,
+    "signal": "■ NORMAL"
+  },
+  {
+    "date": "2026-08-24",
+    "bok_source_date": "2026-08-24",
+    "bok_usd_krw": 1383.6,
+    "cbr_usd_rub": 82.9211,
+    "calc_rub_krw": 16.685741,
+    "krw_1_5m_to_rub": 89897,
+    "usd_rub": 82.9211,
+    "krw_rub": 16.685741,
+    "naver_rub_krw": 16.57,
+    "naver_time": "2026.08.24 13:41",
+    "naver_cash_buy": 18.14,
+    "naver_cash_sell": 13.68,
+    "naver_send": 17.14,
+    "naver_receive": 16.0,
+    "naver_tc_buy": "N/A",
+    "naver_check_sell": "N/A",
+    "score": 61,
     "signal": "■ NORMAL"
   }
 ]
