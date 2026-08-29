@@ -1,25 +1,5 @@
 [
   {
-    "date": "2026-08-19",
-    "bok_source_date": "2026-08-19",
-    "bok_usd_krw": 1411.0,
-    "cbr_usd_rub": 85.1645,
-    "calc_rub_krw": 16.567936,
-    "krw_1_5m_to_rub": 90536,
-    "usd_rub": 85.1645,
-    "krw_rub": 16.567936,
-    "naver_rub_krw": 16.33,
-    "naver_time": "2026.08.19 21:01",
-    "naver_cash_buy": 17.88,
-    "naver_cash_sell": 13.48,
-    "naver_send": 16.9,
-    "naver_receive": 15.76,
-    "naver_tc_buy": "N/A",
-    "naver_check_sell": "N/A",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-08-20",
     "bok_source_date": "2026-08-20",
     "bok_usd_krw": 1402.5,
@@ -36,7 +16,7 @@
     "naver_receive": 16.08,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 64,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -56,7 +36,7 @@
     "naver_receive": 16.01,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 51,
+    "score": 50,
     "signal": "■ NORMAL"
   },
   {
@@ -156,7 +136,7 @@
     "naver_receive": 15.8,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 76,
+    "score": 75,
     "signal": "● GOOD"
   },
   {
@@ -176,7 +156,7 @@
     "naver_receive": 15.46,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 71,
+    "score": 70,
     "signal": "● GOOD"
   },
   {
@@ -196,7 +176,27 @@
     "naver_receive": 15.46,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 94,
+    "score": 93,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-08-29",
+    "bok_source_date": "2026-08-28",
+    "bok_usd_krw": 1380.3,
+    "cbr_usd_rub": 85.6007,
+    "calc_rub_krw": 16.124868,
+    "krw_1_5m_to_rub": 93024,
+    "usd_rub": 85.6007,
+    "krw_rub": 16.124868,
+    "naver_rub_krw": 16.02,
+    "naver_time": "2026.08.28 21:09",
+    "naver_cash_buy": 17.54,
+    "naver_cash_sell": 13.22,
+    "naver_send": 16.58,
+    "naver_receive": 15.46,
+    "naver_tc_buy": "N/A",
+    "naver_check_sell": "N/A",
+    "score": 86,
     "signal": "▲ BEST"
   }
 ]
