@@ -1,25 +1,5 @@
 [
   {
-    "date": "2026-09-04",
-    "bok_source_date": "2026-09-04",
-    "bok_usd_krw": 1359.5,
-    "cbr_usd_rub": 86.8872,
-    "calc_rub_krw": 15.646724,
-    "krw_1_5m_to_rub": 95867,
-    "usd_rub": 86.8872,
-    "krw_rub": 15.646724,
-    "naver_rub_krw": 15.69,
-    "naver_time": "2026.09.04 21:07",
-    "naver_cash_buy": 17.18,
-    "naver_cash_sell": 12.95,
-    "naver_send": 16.23,
-    "naver_receive": 15.15,
-    "naver_tc_buy": "N/A",
-    "naver_check_sell": "N/A",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-09-05",
     "bok_source_date": "2026-09-04",
     "bok_usd_krw": 1359.5,
@@ -36,7 +16,7 @@
     "naver_receive": 15.17,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 58,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -56,7 +36,7 @@
     "naver_receive": 15.17,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 58,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -76,7 +56,7 @@
     "naver_receive": 15.12,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 61,
+    "score": 63,
     "signal": "■ NORMAL"
   },
   {
@@ -96,7 +76,7 @@
     "naver_receive": 15.09,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 66,
+    "score": 67,
     "signal": "● GOOD"
   },
   {
@@ -116,7 +96,7 @@
     "naver_receive": 15.21,
     "naver_tc_buy": "N/A",
     "naver_check_sell": "N/A",
-    "score": 69,
+    "score": 70,
     "signal": "● GOOD"
   },
   {
@@ -142,7 +122,7 @@
     "usd_rub": 84.3508,
     "krw_rub": 15.864698,
     "naver_rub_krw": 15.94,
-    "score": 45,
+    "score": 46,
     "signal": "▼ BAD"
   },
   {
@@ -155,7 +135,7 @@
     "usd_rub": 84.2569,
     "krw_rub": 15.882379,
     "naver_rub_krw": 15.97,
-    "score": 45,
+    "score": 46,
     "signal": "▼ BAD"
   },
   {
@@ -168,7 +148,20 @@
     "usd_rub": 84.2569,
     "krw_rub": 15.882379,
     "naver_rub_krw": 15.97,
-    "score": 46,
+    "score": 47,
+    "signal": "▼ BAD"
+  },
+  {
+    "date": "2026-09-14",
+    "bok_source_date": "2026-09-14",
+    "bok_usd_krw": 1346.4,
+    "cbr_usd_rub": 84.2569,
+    "calc_rub_krw": 15.9797,
+    "krw_1_5m_to_rub": 93869,
+    "usd_rub": 84.2569,
+    "krw_rub": 15.9797,
+    "naver_rub_krw": 15.95,
+    "score": 42,
     "signal": "▼ BAD"
   }
 ]
