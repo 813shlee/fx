@@ -185,6 +185,15 @@ function renderNaverInfo(latest){
   const naverChange=latest.naver_change;
   const naverChangePct=latest.naver_change_pct;
   const changeText=(naverChange===null || naverChange===undefined) ? "" : `전일대비 ${fmt(naverChange,2)} ${naverChangePct ? `(${naverChangePct})` : ""}`;
+  const detailValues=[latest.naver_cash_buy,latest.naver_cash_sell,latest.naver_send,latest.naver_receive];
+  const hasDetails=detailValues.some(value=>value!==null && value!==undefined && value!=="");
+  const details=hasDetails ? `
+    <div class="naver-grid">
+      <div class="naver-row"><span class="naver-label">현찰 사실 때</span><span class="naver-value">${fmt(latest.naver_cash_buy,2)}</span></div>
+      <div class="naver-row"><span class="naver-label">현찰 파실 때</span><span class="naver-value">${fmt(latest.naver_cash_sell,2)}</span></div>
+      <div class="naver-row"><span class="naver-label">송금 보내실 때</span><span class="naver-value">${fmt(latest.naver_send,2)}</span></div>
+      <div class="naver-row"><span class="naver-label">송금 받으실 때</span><span class="naver-value">${fmt(latest.naver_receive,2)}</span></div>
+    </div>` : "";
 
   document.getElementById("naverInfo").innerHTML=`
     <div class="naver-head">
@@ -196,15 +205,10 @@ function renderNaverInfo(latest){
       <div class="naver-time">${latest.naver_time ?? ""}</div>
     </div>
 
-    <div class="naver-grid">
-      <div class="naver-row"><span class="naver-label">현찰 사실 때</span><span class="naver-value">${fmt(latest.naver_cash_buy,2)}</span></div>
-      <div class="naver-row"><span class="naver-label">현찰 파실 때</span><span class="naver-value">${fmt(latest.naver_cash_sell,2)}</span></div>
-      <div class="naver-row"><span class="naver-label">송금 보내실 때</span><span class="naver-value">${fmt(latest.naver_send,2)}</span></div>
-      <div class="naver-row"><span class="naver-label">송금 받으실 때</span><span class="naver-value">${fmt(latest.naver_receive,2)}</span></div>
-    </div>
+    ${details}
 
     <div class="naver-note">
-      네이버 금융 RUB/KRW 기준입니다. 값이 '-'로 나오면 update_rates.py에서 네이버 데이터를 가져오지 못한 상태입니다.
+      네이버 금융 RUB/KRW 기준입니다. 현찰·송금 환율은 네이버의 최신 일별 고시 데이터입니다.
     </div>
   `;
 }
