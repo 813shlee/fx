@@ -18,6 +18,10 @@ if not BOK_API_KEY:
 OUT = Path("rates.json")
 
 NAVER_API_URL = "https://api.stock.naver.com/marketindex/exchange/FX_RUBKRW"
+NAVER_PRICES_URL = (
+    "https://api.stock.naver.com/marketindex/exchange/FX_RUBKRW/prices"
+    "?page=1&pageSize=1"
+)
 
 HEADERS = {
     "User-Agent": (
@@ -233,6 +237,42 @@ def fetch_naver_rub_krw():
         if local_traded_at
         else None
     )
+
+    # The detail endpoint has the live headline rate, while the prices endpoint
+    # contains the latest cash/remittance rates shown in Naver's daily table.
+    try:
+        prices_response = get_url(
+            NAVER_PRICES_URL,
+            headers=HEADERS,
+            timeout=(5, 10),
+        )
+        prices_response.raise_for_status()
+        prices = prices_response.json()
+
+        if not isinstance(prices, list) or not prices:
+            raise ValueError("Naver prices response is empty")
+
+        latest_price = prices[0]
+        quote_date = local_traded_at[:10] if local_traded_at else None
+        price_date = latest_price.get("localTradedAt")
+
+        if quote_date and price_date and quote_date != price_date:
+            raise ValueError(
+                f"Naver quote date mismatch: detail={quote_date}, prices={price_date}"
+            )
+
+        price_rate = to_float(latest_price.get("closePrice"))
+        if price_rate is None or abs(price_rate - rate) > 3:
+            raise ValueError(
+                f"Invalid Naver prices RUB/KRW rate: {latest_price.get('closePrice')!r}"
+            )
+
+        result["naver_cash_buy"] = to_float(latest_price.get("cashBuyValue"))
+        result["naver_cash_sell"] = to_float(latest_price.get("cashSellValue"))
+        result["naver_send"] = to_float(latest_price.get("sendValue"))
+        result["naver_receive"] = to_float(latest_price.get("receiveValue"))
+    except Exception as exc:
+        print(f"Warning: failed to fetch Naver cash/remittance rates: {exc}")
 
     return result
 
