@@ -17,8 +17,7 @@ if not BOK_API_KEY:
 
 OUT = Path("rates.json")
 
-NAVER_DETAIL_URL = "https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_RUBKRW"
-NAVER_DAILY_URL = "https://finance.naver.com/marketindex/exchangeDailyQuote.naver?marketindexCd=FX_RUBKRW&page=1"
+NAVER_API_URL = "https://api.stock.naver.com/marketindex/exchange/FX_RUBKRW"
 
 HEADERS = {
     "User-Agent": (
@@ -26,9 +25,9 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/125.0.0.0 Safari/537.36"
     ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept": "application/json",
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Referer": "https://finance.naver.com/marketindex/",
+    "Referer": "https://stock.naver.com/marketindex/exchange/FX_RUBKRW/price",
     "Connection": "close",
 }
 
@@ -180,89 +179,6 @@ def fetch_cbr_usd_rub(iso_date):
     raise RuntimeError(f"USD not found in CBR response for {iso_date}")
 
 
-def _decode_response(response):
-    raw = response.content
-
-    for enc in [response.encoding, "euc-kr", "cp949", "utf-8"]:
-        if not enc:
-            continue
-
-        try:
-            return raw.decode(enc)
-        except Exception:
-            pass
-
-    return response.text
-
-
-def _clean_text(raw):
-    raw = re.sub(r"<script[\s\S]*?</script>", " ", raw, flags=re.I)
-    raw = re.sub(r"<style[\s\S]*?</style>", " ", raw, flags=re.I)
-    raw = re.sub(r"<[^>]+>", " ", raw)
-    raw = html.unescape(raw)
-    return re.sub(r"\s+", " ", raw).strip()
-
-
-def _flex_label_pattern(label):
-    compact = re.sub(r"\s+", "", label)
-    return r"\s*".join(map(re.escape, compact))
-
-
-def _extract_after_label(text, label):
-    pattern = _flex_label_pattern(label) + r"\s*([0-9][0-9,\.]*|N/A)"
-    m = re.search(pattern, text)
-
-    if not m:
-        return None
-
-    return m.group(1) if m.group(1) == "N/A" else to_float(m.group(1))
-
-
-def _extract_main_naver_rate(raw, text, send=None, receive=None):
-    candidates = []
-
-    patterns = [
-        r'class=["\']no_today["\'][\s\S]{0,1600}?<span[^>]*class=["\']blind["\'][^>]*>\s*([0-9][0-9,\.]*)\s*</span>',
-        r'class=["\']no_today["\'][\s\S]{0,1600}?<em[^>]*>\s*([0-9][0-9,\.]*)\s*</em>',
-        r'러시아\s*RUB\s*([0-9][0-9,\.]*)\s*원',
-        r'RUBKRW[^0-9]{0,80}([0-9][0-9,\.]*)\s*원',
-        r'([0-9][0-9,\.]*)\s*원\s*전일대비',
-    ]
-
-    for pat in patterns:
-        source = raw if "class=" in pat else text
-
-        for m in re.finditer(pat, source, flags=re.I):
-            value = to_float(m.group(1))
-
-            if value is not None:
-                candidates.append(value)
-
-    # 7.0 같은 전일대비/기타 숫자를 제거
-    candidates = [v for v in candidates if 10 <= v <= 40]
-
-    # 송금 보내실 때/받으실 때 값이 있으면 그 주변 값만 대표 환율로 인정
-    if send and receive:
-        send = float(send)
-        receive = float(receive)
-
-        low = min(send, receive) - 1.0
-        high = max(send, receive) + 1.0
-        filtered = [v for v in candidates if low <= v <= high]
-
-        if filtered:
-            midpoint = (send + receive) / 2
-            return min(filtered, key=lambda x: abs(x - midpoint))
-
-        # 대표값을 못 찾으면 송금값 평균으로 대체
-        return round((send + receive) / 2, 4)
-
-    if candidates:
-        return candidates[0]
-
-    return None
-
-
 def empty_naver_data():
     return {
         "naver_rub_krw": None,
@@ -281,63 +197,42 @@ def empty_naver_data():
 def fetch_naver_rub_krw():
     result = empty_naver_data()
 
-    r = get_url(NAVER_DETAIL_URL, headers=HEADERS, timeout=(5, 10))
+    r = get_url(NAVER_API_URL, headers=HEADERS, timeout=(5, 10))
     r.raise_for_status()
 
-    raw = _decode_response(r)
-    text = _clean_text(raw)
+    payload = r.json()
+    info = payload.get("exchangeInfo") or {}
 
-    # 먼저 보조 환율을 읽어 대표 환율 검증 기준으로 사용
-    result["naver_cash_buy"] = _extract_after_label(text, "현찰 사실 때")
-    result["naver_cash_sell"] = _extract_after_label(text, "현찰 파실 때")
-    result["naver_send"] = _extract_after_label(text, "송금 보내실 때")
-    result["naver_receive"] = _extract_after_label(text, "송금 받으실 때")
-    result["naver_tc_buy"] = _extract_after_label(text, "T/C 사실 때")
-    result["naver_check_sell"] = _extract_after_label(text, "외화수표 파실 때")
+    if info.get("reutersCode") != "FX_RUBKRW":
+        raise ValueError("Naver response does not contain FX_RUBKRW data")
 
-    result["naver_rub_krw"] = _extract_main_naver_rate(
-        raw,
-        text,
-        result["naver_send"],
-        result["naver_receive"],
+    rate = to_float(info.get("closePrice"))
+    if rate is None or not 10 <= rate <= 40:
+        raise ValueError(f"Invalid Naver RUB/KRW rate: {info.get('closePrice')!r}")
+
+    change = to_float(info.get("fluctuations"))
+    change_pct = to_float(info.get("fluctuationsRatio"))
+    direction = (info.get("fluctuationsType") or {}).get("name")
+
+    if direction == "FALLING":
+        change = -abs(change) if change is not None else None
+        change_pct = -abs(change_pct) if change_pct is not None else None
+    elif direction == "RISING":
+        change = abs(change) if change is not None else None
+        change_pct = abs(change_pct) if change_pct is not None else None
+
+    local_traded_at = info.get("localTradedAt")
+
+    result["naver_rub_krw"] = rate
+    result["naver_change"] = change
+    result["naver_change_pct"] = (
+        f"{change_pct:.2f}%" if change_pct is not None else None
     )
-
-    m = re.search(
-        r"전일대비\s*([▲▼+\-]?)\s*([0-9][0-9,\.]*)\s*([+\-]?[0-9][0-9,\.]*%)",
-        text,
+    result["naver_time"] = (
+        local_traded_at[:16].replace("-", ".").replace("T", " ")
+        if local_traded_at
+        else None
     )
-
-    if m:
-        sign = -1 if m.group(1) in ("▼", "-") else 1
-        result["naver_change"] = sign * to_float(m.group(2))
-        result["naver_change_pct"] = m.group(3)
-
-    m = re.search(r"(20\d{2}\.\d{2}\.\d{2}\s+\d{2}:\d{2})", text)
-
-    if m:
-        result["naver_time"] = m.group(1)
-
-    if result["naver_rub_krw"] is None:
-        try:
-            r2 = get_url(NAVER_DAILY_URL, headers=HEADERS, timeout=(5, 8))
-            r2.raise_for_status()
-
-            raw2 = _decode_response(r2)
-
-            m2 = re.search(
-                r"<tr[^>]*>[\s\S]*?<td[^>]*class=[\"']date[\"'][^>]*>\s*(20\d{2}\.\d{2}\.\d{2})\s*</td>[\s\S]*?<td[^>]*>\s*([0-9][0-9,\.]*)\s*</td>",
-                raw2,
-                flags=re.I,
-            )
-
-            if m2:
-                fallback_value = to_float(m2.group(2))
-
-                if fallback_value is not None and 10 <= fallback_value <= 40:
-                    result["naver_rub_krw"] = fallback_value
-
-        except Exception as exc:
-            print(f"Warning: Naver daily fallback failed: {exc}")
 
     return result
 
@@ -396,7 +291,7 @@ def main():
 
     try:
         naver = fetch_naver_rub_krw()
-        print("Fetched Naver RUB/KRW data.")
+        print(f"Fetched Naver RUB/KRW: {naver['naver_rub_krw']}")
     except Exception as exc:
         print(f"Warning: failed to fetch Naver RUB/KRW data: {exc}")
         naver = empty_naver_data()
