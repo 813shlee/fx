@@ -1,25 +1,5 @@
 [
   {
-    "date": "2026-09-09",
-    "bok_source_date": "2026-09-09",
-    "bok_usd_krw": 1341.1,
-    "cbr_usd_rub": 86.473,
-    "calc_rub_krw": 15.508887,
-    "krw_1_5m_to_rub": 96719,
-    "usd_rub": 86.473,
-    "krw_rub": 15.508887,
-    "naver_rub_krw": 15.76,
-    "naver_time": "2026.09.09 21:03",
-    "naver_cash_buy": 17.25,
-    "naver_cash_sell": 13.01,
-    "naver_send": 16.31,
-    "naver_receive": 15.21,
-    "naver_tc_buy": "N/A",
-    "naver_check_sell": "N/A",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-09-10",
     "bok_source_date": "2026-09-10",
     "bok_usd_krw": 1337.9,
@@ -29,7 +9,7 @@
     "usd_rub": 85.4594,
     "krw_rub": 15.655387,
     "naver_rub_krw": 16.03,
-    "score": 53,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -42,8 +22,8 @@
     "usd_rub": 84.3508,
     "krw_rub": 15.864698,
     "naver_rub_krw": 15.94,
-    "score": 43,
-    "signal": "▼ BAD"
+    "score": 51,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-09-12",
@@ -55,8 +35,8 @@
     "usd_rub": 84.2569,
     "krw_rub": 15.882379,
     "naver_rub_krw": 15.97,
-    "score": 45,
-    "signal": "▼ BAD"
+    "score": 52,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-09-13",
@@ -68,8 +48,8 @@
     "usd_rub": 84.2569,
     "krw_rub": 15.882379,
     "naver_rub_krw": 15.97,
-    "score": 47,
-    "signal": "▼ BAD"
+    "score": 53,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-09-14",
@@ -81,7 +61,7 @@
     "usd_rub": 84.2569,
     "krw_rub": 15.9797,
     "naver_rub_krw": 15.94,
-    "score": 42,
+    "score": 47,
     "signal": "▼ BAD"
   },
   {
@@ -94,8 +74,8 @@
     "usd_rub": 84.3363,
     "krw_rub": 15.951613,
     "naver_rub_krw": 16.19,
-    "score": 45,
-    "signal": "▼ BAD"
+    "score": 50,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-09-16",
@@ -107,7 +87,7 @@
     "usd_rub": 84.2362,
     "krw_rub": 16.06554,
     "naver_rub_krw": 16.19,
-    "score": 39,
+    "score": 44,
     "signal": "▼ BAD"
   },
   {
@@ -123,7 +103,7 @@
     "naver_change": 0.04,
     "naver_change_pct": "0.25%",
     "naver_time": "2026.09.18 01:31",
-    "score": 27,
+    "score": 33,
     "signal": "▼ BAD"
   },
   {
@@ -139,7 +119,23 @@
     "naver_change": 0.16,
     "naver_change_pct": "0.98%",
     "naver_time": "2026.09.19 01:04",
-    "score": 24,
+    "score": 29,
+    "signal": "▼ BAD"
+  },
+  {
+    "date": "2026-09-19",
+    "bok_source_date": "2026-09-18",
+    "bok_usd_krw": 1380.3,
+    "cbr_usd_rub": 84.1975,
+    "calc_rub_krw": 16.393598,
+    "krw_1_5m_to_rub": 91499,
+    "usd_rub": 84.1975,
+    "krw_rub": 16.393598,
+    "naver_rub_krw": 16.5,
+    "naver_change": 0.16,
+    "naver_change_pct": "0.98%",
+    "naver_time": "2026.09.19 15:30",
+    "score": 27,
     "signal": "▼ BAD"
   }
 ]
