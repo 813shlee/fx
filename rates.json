@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-09-14",
-    "bok_source_date": "2026-09-14",
-    "bok_usd_krw": 1346.4,
-    "cbr_usd_rub": 84.2569,
-    "calc_rub_krw": 15.9797,
-    "krw_1_5m_to_rub": 93869,
-    "usd_rub": 84.2569,
-    "krw_rub": 15.9797,
-    "naver_rub_krw": 15.94,
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-09-15",
     "bok_source_date": "2026-09-15",
     "bok_usd_krw": 1345.3,
@@ -22,7 +9,7 @@
     "usd_rub": 84.3363,
     "krw_rub": 15.951613,
     "naver_rub_krw": 16.19,
-    "score": 61,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -51,7 +38,7 @@
     "naver_change": 0.04,
     "naver_change_pct": "0.25%",
     "naver_time": "2026.09.18 01:31",
-    "score": 45,
+    "score": 46,
     "signal": "▼ BAD"
   },
   {
@@ -67,7 +54,7 @@
     "naver_change": 0.16,
     "naver_change_pct": "0.98%",
     "naver_time": "2026.09.19 01:04",
-    "score": 42,
+    "score": 44,
     "signal": "▼ BAD"
   },
   {
@@ -83,7 +70,7 @@
     "naver_change": 0.16,
     "naver_change_pct": "0.98%",
     "naver_time": "2026.09.19 15:30",
-    "score": 40,
+    "score": 42,
     "signal": "▼ BAD"
   },
   {
@@ -99,7 +86,7 @@
     "naver_change": 0.17,
     "naver_change_pct": "1.04%",
     "naver_time": "2026.09.20 11:23",
-    "score": 42,
+    "score": 44,
     "signal": "▼ BAD"
   },
   {
@@ -115,7 +102,7 @@
     "naver_change": -0.07,
     "naver_change_pct": "-0.42%",
     "naver_time": "2026.09.22 03:00",
-    "score": 41,
+    "score": 43,
     "signal": "▼ BAD"
   },
   {
@@ -131,7 +118,7 @@
     "naver_change": -0.28,
     "naver_change_pct": "-1.71%",
     "naver_time": "2026.09.23 01:32",
-    "score": 41,
+    "score": 42,
     "signal": "▼ BAD"
   },
   {
@@ -147,7 +134,23 @@
     "naver_change": 0.08,
     "naver_change_pct": "0.50%",
     "naver_time": "2026.09.24 01:26",
-    "score": 60,
+    "score": 62,
     "signal": "■ NORMAL"
+  },
+  {
+    "date": "2026-09-24",
+    "bok_source_date": "2026-09-23",
+    "bok_usd_krw": 1360.0,
+    "cbr_usd_rub": 84.3969,
+    "calc_rub_krw": 16.114336,
+    "krw_1_5m_to_rub": 93085,
+    "usd_rub": 84.3969,
+    "krw_rub": 16.114336,
+    "naver_rub_krw": 16.16,
+    "naver_change": 0.07,
+    "naver_change_pct": "0.44%",
+    "naver_time": "2026.09.24 07:55",
+    "score": 65,
+    "signal": "● GOOD"
   }
 ]
