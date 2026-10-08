@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-09-28",
-    "bok_source_date": "2026-09-28",
-    "bok_usd_krw": 1352.0,
-    "cbr_usd_rub": 84.3414,
-    "calc_rub_krw": 16.030087,
-    "krw_1_5m_to_rub": 93574,
-    "usd_rub": 84.3414,
-    "krw_rub": 16.030087,
-    "naver_rub_krw": 16.1,
-    "naver_change": -0.05,
-    "naver_change_pct": "-0.31%",
-    "naver_time": "2026.09.29 04:25",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-09-29",
     "bok_source_date": "2026-09-29",
     "bok_usd_krw": 1360.0,
@@ -28,7 +12,7 @@
     "naver_change": 0.03,
     "naver_change_pct": "0.19%",
     "naver_time": "2026.09.30 02:51",
-    "score": 56,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -44,7 +28,7 @@
     "naver_change": 0.15,
     "naver_change_pct": "0.93%",
     "naver_time": "2026.10.01 02:48",
-    "score": 58,
+    "score": 61,
     "signal": "■ NORMAL"
   },
   {
@@ -60,7 +44,7 @@
     "naver_change": 0.0,
     "naver_change_pct": "0.00%",
     "naver_time": "2026.10.02 03:13",
-    "score": 51,
+    "score": 54,
     "signal": "■ NORMAL"
   },
   {
@@ -76,7 +60,7 @@
     "naver_change": -0.21,
     "naver_change_pct": "-1.29%",
     "naver_time": "2026.10.03 02:38",
-    "score": 45,
+    "score": 49,
     "signal": "▼ BAD"
   },
   {
@@ -92,7 +76,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 50,
+    "score": 53,
     "signal": "■ NORMAL"
   },
   {
@@ -108,7 +92,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 51,
+    "score": 54,
     "signal": "■ NORMAL"
   },
   {
@@ -124,7 +108,7 @@
     "naver_change": -0.54,
     "naver_change_pct": "-3.32%",
     "naver_time": "2026.10.06 05:13",
-    "score": 51,
+    "score": 54,
     "signal": "■ NORMAL"
   },
   {
@@ -140,7 +124,7 @@
     "naver_change": 0.06,
     "naver_change_pct": "0.38%",
     "naver_time": "2026.10.07 03:02",
-    "score": 71,
+    "score": 73,
     "signal": "● GOOD"
   },
   {
@@ -156,6 +140,26 @@
     "naver_change": -0.14,
     "naver_change_pct": "-0.89%",
     "naver_time": "2026.10.08 03:39",
+    "score": 93,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-10-08",
+    "bok_source_date": "2026-10-08",
+    "bok_usd_krw": 1339.2,
+    "cbr_usd_rub": 85.4811,
+    "calc_rub_krw": 15.666621,
+    "krw_1_5m_to_rub": 95745,
+    "usd_rub": 85.4811,
+    "krw_rub": 15.666621,
+    "naver_rub_krw": 15.77,
+    "naver_change": 0.08,
+    "naver_change_pct": "0.51%",
+    "naver_time": "2026.10.08 20:05",
+    "naver_cash_buy": 17.26,
+    "naver_cash_sell": 13.02,
+    "naver_send": 16.32,
+    "naver_receive": 15.22,
     "score": 91,
     "signal": "▲ BEST"
   }
