@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-09-29",
-    "bok_source_date": "2026-09-29",
-    "bok_usd_krw": 1360.0,
-    "cbr_usd_rub": 84.4075,
-    "calc_rub_krw": 16.112312,
-    "krw_1_5m_to_rub": 93097,
-    "usd_rub": 84.4075,
-    "krw_rub": 16.112312,
-    "naver_rub_krw": 16.14,
-    "naver_change": 0.03,
-    "naver_change_pct": "0.19%",
-    "naver_time": "2026.09.30 02:51",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-09-30",
     "bok_source_date": "2026-09-30",
     "bok_usd_krw": 1358.4,
@@ -28,7 +12,7 @@
     "naver_change": 0.15,
     "naver_change_pct": "0.93%",
     "naver_time": "2026.10.01 02:48",
-    "score": 61,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -60,8 +44,8 @@
     "naver_change": -0.21,
     "naver_change_pct": "-1.29%",
     "naver_time": "2026.10.03 02:38",
-    "score": 49,
-    "signal": "▼ BAD"
+    "score": 50,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-03",
@@ -76,7 +60,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 53,
+    "score": 54,
     "signal": "■ NORMAL"
   },
   {
@@ -92,7 +76,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 54,
+    "score": 55,
     "signal": "■ NORMAL"
   },
   {
@@ -108,7 +92,7 @@
     "naver_change": -0.54,
     "naver_change_pct": "-3.32%",
     "naver_time": "2026.10.06 05:13",
-    "score": 54,
+    "score": 55,
     "signal": "■ NORMAL"
   },
   {
@@ -156,7 +140,23 @@
     "naver_change": 0.11,
     "naver_change_pct": "0.70%",
     "naver_time": "2026.10.09 03:36",
-    "score": 91,
+    "score": 90,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-10-09",
+    "bok_source_date": "2026-10-08",
+    "bok_usd_krw": 1339.2,
+    "cbr_usd_rub": 85.4173,
+    "calc_rub_krw": 15.678323,
+    "krw_1_5m_to_rub": 95673,
+    "usd_rub": 85.4173,
+    "krw_rub": 15.678323,
+    "naver_rub_krw": 15.82,
+    "naver_change": 0.13,
+    "naver_change_pct": "0.83%",
+    "naver_time": "2026.10.09 20:07",
+    "score": 87,
     "signal": "▲ BEST"
   }
 ]
