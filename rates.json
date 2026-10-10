@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-09-30",
-    "bok_source_date": "2026-09-30",
-    "bok_usd_krw": 1358.4,
-    "cbr_usd_rub": 84.4283,
-    "calc_rub_krw": 16.089392,
-    "krw_1_5m_to_rub": 93229,
-    "usd_rub": 84.4283,
-    "krw_rub": 16.089392,
-    "naver_rub_krw": 16.26,
-    "naver_change": 0.15,
-    "naver_change_pct": "0.93%",
-    "naver_time": "2026.10.01 02:48",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-10-01",
     "bok_source_date": "2026-10-01",
     "bok_usd_krw": 1355.7,
@@ -28,7 +12,7 @@
     "naver_change": 0.0,
     "naver_change_pct": "0.00%",
     "naver_time": "2026.10.02 03:13",
-    "score": 54,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -44,7 +28,7 @@
     "naver_change": -0.21,
     "naver_change_pct": "-1.29%",
     "naver_time": "2026.10.03 02:38",
-    "score": 50,
+    "score": 55,
     "signal": "■ NORMAL"
   },
   {
@@ -60,7 +44,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 54,
+    "score": 59,
     "signal": "■ NORMAL"
   },
   {
@@ -76,7 +60,7 @@
     "naver_change": -0.18,
     "naver_change_pct": "-1.11%",
     "naver_time": "2026.10.03 19:47",
-    "score": 55,
+    "score": 59,
     "signal": "■ NORMAL"
   },
   {
@@ -92,7 +76,7 @@
     "naver_change": -0.54,
     "naver_change_pct": "-3.32%",
     "naver_time": "2026.10.06 05:13",
-    "score": 55,
+    "score": 59,
     "signal": "■ NORMAL"
   },
   {
@@ -108,7 +92,7 @@
     "naver_change": 0.06,
     "naver_change_pct": "0.38%",
     "naver_time": "2026.10.07 03:02",
-    "score": 73,
+    "score": 77,
     "signal": "● GOOD"
   },
   {
@@ -124,7 +108,7 @@
     "naver_change": -0.14,
     "naver_change_pct": "-0.89%",
     "naver_time": "2026.10.08 03:39",
-    "score": 93,
+    "score": 95,
     "signal": "▲ BEST"
   },
   {
@@ -140,7 +124,7 @@
     "naver_change": 0.11,
     "naver_change_pct": "0.70%",
     "naver_time": "2026.10.09 03:36",
-    "score": 90,
+    "score": 92,
     "signal": "▲ BEST"
   },
   {
@@ -156,7 +140,23 @@
     "naver_change": 0.09,
     "naver_change_pct": "0.57%",
     "naver_time": "2026.10.10 03:08",
-    "score": 87,
+    "score": 89,
+    "signal": "▲ BEST"
+  },
+  {
+    "date": "2026-10-10",
+    "bok_source_date": "2026-10-08",
+    "bok_usd_krw": 1339.2,
+    "cbr_usd_rub": 84.9048,
+    "calc_rub_krw": 15.77296,
+    "krw_1_5m_to_rub": 95099,
+    "usd_rub": 84.9048,
+    "krw_rub": 15.77296,
+    "naver_rub_krw": 15.79,
+    "naver_change": 0.1,
+    "naver_change_pct": "0.64%",
+    "naver_time": "2026.10.10 13:48",
+    "score": 81,
     "signal": "▲ BEST"
   }
 ]
