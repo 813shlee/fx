@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-10-10",
-    "bok_source_date": "2026-10-08",
-    "bok_usd_krw": 1339.2,
-    "cbr_usd_rub": 84.9048,
-    "calc_rub_krw": 15.77296,
-    "krw_1_5m_to_rub": 95099,
-    "usd_rub": 84.9048,
-    "krw_rub": 15.77296,
-    "naver_rub_krw": 15.79,
-    "naver_change": 0.1,
-    "naver_change_pct": "0.64%",
-    "naver_time": "2026.10.10 13:48",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-10-11",
     "bok_source_date": "2026-10-08",
     "bok_usd_krw": 1339.2,
@@ -60,7 +44,7 @@
     "naver_change": 0.16,
     "naver_change_pct": "1.01%",
     "naver_time": "2026.10.14 03:59",
-    "score": 51,
+    "score": 52,
     "signal": "■ NORMAL"
   },
   {
@@ -76,7 +60,7 @@
     "naver_change": 0.03,
     "naver_change_pct": "0.19%",
     "naver_time": "2026.10.15 01:49",
-    "score": 48,
+    "score": 49,
     "signal": "▼ BAD"
   },
   {
@@ -92,7 +76,7 @@
     "naver_change": -0.03,
     "naver_change_pct": "-0.19%",
     "naver_time": "2026.10.16 01:34",
-    "score": 52,
+    "score": 53,
     "signal": "■ NORMAL"
   },
   {
@@ -108,7 +92,7 @@
     "naver_change": 0.07,
     "naver_change_pct": "0.44%",
     "naver_time": "2026.10.17 01:18",
-    "score": 43,
+    "score": 44,
     "signal": "▼ BAD"
   },
   {
@@ -124,7 +108,7 @@
     "naver_change": 0.1,
     "naver_change_pct": "0.63%",
     "naver_time": "2026.10.17 13:13",
-    "score": 43,
+    "score": 44,
     "signal": "▼ BAD"
   },
   {
@@ -140,7 +124,7 @@
     "naver_change": 0.1,
     "naver_change_pct": "0.63%",
     "naver_time": "2026.10.17 13:13",
-    "score": 44,
+    "score": 45,
     "signal": "▼ BAD"
   },
   {
@@ -156,6 +140,26 @@
     "naver_change": 0.0,
     "naver_change_pct": "0.00%",
     "naver_time": "2026.10.20 03:27",
+    "score": 51,
+    "signal": "■ NORMAL"
+  },
+  {
+    "date": "2026-10-20",
+    "bok_source_date": "2026-10-20",
+    "bok_usd_krw": 1332.1,
+    "cbr_usd_rub": 82.8504,
+    "calc_rub_krw": 16.078377,
+    "krw_1_5m_to_rub": 93293,
+    "usd_rub": 82.8504,
+    "krw_rub": 16.078377,
+    "naver_rub_krw": 16.05,
+    "naver_change": -0.06,
+    "naver_change_pct": "-0.37%",
+    "naver_time": "2026.10.20 18:08",
+    "naver_cash_buy": 17.57,
+    "naver_cash_sell": 13.25,
+    "naver_send": 16.61,
+    "naver_receive": 15.49,
     "score": 50,
     "signal": "■ NORMAL"
   }
