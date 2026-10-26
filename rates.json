@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-10-16",
-    "bok_source_date": "2026-10-16",
-    "bok_usd_krw": 1348.5,
-    "cbr_usd_rub": 83.76,
-    "calc_rub_krw": 16.09957,
-    "krw_1_5m_to_rub": 93170,
-    "usd_rub": 83.76,
-    "krw_rub": 16.09957,
-    "naver_rub_krw": 16.07,
-    "naver_change": 0.07,
-    "naver_change_pct": "0.44%",
-    "naver_time": "2026.10.17 01:18",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-10-17",
     "bok_source_date": "2026-10-16",
     "bok_usd_krw": 1348.5,
@@ -28,7 +12,7 @@
     "naver_change": 0.1,
     "naver_change_pct": "0.63%",
     "naver_time": "2026.10.17 13:13",
-    "score": 59,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -44,7 +28,7 @@
     "naver_change": 0.1,
     "naver_change_pct": "0.63%",
     "naver_time": "2026.10.17 13:13",
-    "score": 59,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -60,7 +44,7 @@
     "naver_change": 0.0,
     "naver_change_pct": "0.00%",
     "naver_time": "2026.10.20 03:27",
-    "score": 63,
+    "score": 64,
     "signal": "■ NORMAL"
   },
   {
@@ -76,7 +60,7 @@
     "naver_change": 0.0,
     "naver_change_pct": "0.00%",
     "naver_time": "2026.10.21 01:33",
-    "score": 61,
+    "score": 62,
     "signal": "■ NORMAL"
   },
   {
@@ -124,7 +108,7 @@
     "naver_change": 0.24,
     "naver_change_pct": "1.48%",
     "naver_time": "2026.10.24 01:43",
-    "score": 45,
+    "score": 46,
     "signal": "▼ BAD"
   },
   {
@@ -156,7 +140,27 @@
     "naver_change": 0.25,
     "naver_change_pct": "1.54%",
     "naver_time": "2026.10.24 12:01",
-    "score": 40,
+    "score": 41,
+    "signal": "▼ BAD"
+  },
+  {
+    "date": "2026-10-26",
+    "bok_source_date": "2026-10-26",
+    "bok_usd_krw": 1324.3,
+    "cbr_usd_rub": 80.5381,
+    "calc_rub_krw": 16.443149,
+    "krw_1_5m_to_rub": 91223,
+    "usd_rub": 80.5381,
+    "krw_rub": 16.443149,
+    "naver_rub_krw": 16.41,
+    "naver_change": -0.03,
+    "naver_change_pct": "-0.18%",
+    "naver_time": "2026.10.26 18:43",
+    "naver_cash_buy": 17.96,
+    "naver_cash_sell": 13.54,
+    "naver_send": 16.98,
+    "naver_receive": 15.84,
+    "score": 43,
     "signal": "▼ BAD"
   }
 ]
