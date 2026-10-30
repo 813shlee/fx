@@ -152,14 +152,10 @@
     "krw_1_5m_to_rub": 90627,
     "usd_rub": 80.6761,
     "krw_rub": 16.55137,
-    "naver_rub_krw": 16.61,
-    "naver_change": 0.11,
-    "naver_change_pct": "0.67%",
-    "naver_time": "2026.10.30 19:40",
-    "naver_cash_buy": 18.18,
-    "naver_cash_sell": 13.71,
-    "naver_send": 17.19,
-    "naver_receive": 16.03,
+    "naver_rub_krw": 16.55,
+    "naver_change": 0.05,
+    "naver_change_pct": "0.30%",
+    "naver_time": "2026.10.31 02:47",
     "score": 42,
     "signal": "▼ BAD"
   }
