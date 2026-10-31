@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-10-21",
-    "bok_source_date": "2026-10-21",
-    "bok_usd_krw": 1328.0,
-    "cbr_usd_rub": 82.8879,
-    "calc_rub_krw": 16.021639,
-    "krw_1_5m_to_rub": 93623,
-    "usd_rub": 82.8879,
-    "krw_rub": 16.021639,
-    "naver_rub_krw": 16.2,
-    "naver_change": 0.11,
-    "naver_change_pct": "0.68%",
-    "naver_time": "2026.10.22 01:48",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-10-22",
     "bok_source_date": "2026-10-22",
     "bok_usd_krw": 1325.5,
@@ -28,7 +12,7 @@
     "naver_change": 0.01,
     "naver_change_pct": "0.06%",
     "naver_time": "2026.10.23 01:50",
-    "score": 53,
+    "score": 60,
     "signal": "■ NORMAL"
   },
   {
@@ -44,8 +28,8 @@
     "naver_change": 0.24,
     "naver_change_pct": "1.48%",
     "naver_time": "2026.10.24 01:43",
-    "score": 46,
-    "signal": "▼ BAD"
+    "score": 53,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-24",
@@ -60,7 +44,7 @@
     "naver_change": 0.25,
     "naver_change_pct": "1.54%",
     "naver_time": "2026.10.24 12:01",
-    "score": 42,
+    "score": 48,
     "signal": "▼ BAD"
   },
   {
@@ -76,8 +60,8 @@
     "naver_change": 0.25,
     "naver_change_pct": "1.54%",
     "naver_time": "2026.10.24 12:01",
-    "score": 44,
-    "signal": "▼ BAD"
+    "score": 50,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-26",
@@ -92,8 +76,8 @@
     "naver_change": -0.03,
     "naver_change_pct": "-0.18%",
     "naver_time": "2026.10.27 03:29",
-    "score": 46,
-    "signal": "▼ BAD"
+    "score": 51,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-27",
@@ -108,8 +92,8 @@
     "naver_change": 0.05,
     "naver_change_pct": "0.30%",
     "naver_time": "2026.10.28 02:43",
-    "score": 48,
-    "signal": "▼ BAD"
+    "score": 53,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-28",
@@ -124,8 +108,8 @@
     "naver_change": 0.2,
     "naver_change_pct": "1.21%",
     "naver_time": "2026.10.29 03:06",
-    "score": 48,
-    "signal": "▼ BAD"
+    "score": 52,
+    "signal": "■ NORMAL"
   },
   {
     "date": "2026-10-29",
@@ -140,7 +124,7 @@
     "naver_change": -0.2,
     "naver_change_pct": "-1.20%",
     "naver_time": "2026.10.30 03:14",
-    "score": 43,
+    "score": 48,
     "signal": "▼ BAD"
   },
   {
@@ -156,7 +140,23 @@
     "naver_change": 0.05,
     "naver_change_pct": "0.30%",
     "naver_time": "2026.10.31 02:47",
-    "score": 42,
+    "score": 47,
+    "signal": "▼ BAD"
+  },
+  {
+    "date": "2026-10-31",
+    "bok_source_date": "2026-10-30",
+    "bok_usd_krw": 1335.3,
+    "cbr_usd_rub": 80.5573,
+    "calc_rub_krw": 16.575779,
+    "krw_1_5m_to_rub": 90493,
+    "usd_rub": 80.5573,
+    "krw_rub": 16.575779,
+    "naver_rub_krw": 16.56,
+    "naver_change": 0.06,
+    "naver_change_pct": "0.36%",
+    "naver_time": "2026.10.31 06:02",
+    "score": 46,
     "signal": "▼ BAD"
   }
 ]
