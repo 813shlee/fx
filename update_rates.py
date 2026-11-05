@@ -152,7 +152,7 @@ def fetch_bok_usd_krw(days_back=80):
     return dict(sorted(result.items()))
 
 
-def fetch_cbr_usd_rub(iso_date):
+def fetch_cbr_rates(iso_date):
     y, m, d = iso_date.split("-")
     date_req = f"{d}/{m}/{y}"
 
@@ -169,18 +169,21 @@ def fetch_cbr_usd_rub(iso_date):
 
     root = ET.fromstring(r.content)
 
+    rates = {}
     for valute in root.findall("Valute"):
-        if valute.findtext("CharCode") == "USD":
+        code = valute.findtext("CharCode")
+        if code in ("USD", "EUR"):
             nominal = to_float(valute.findtext("Nominal"))
             value = to_float(valute.findtext("Value"))
-            usd_rub = value / nominal
+            if not nominal or value is None or value <= 0:
+                raise ValueError(f"Invalid CBR {code}/RUB for {iso_date}")
+            rates[code] = value / nominal
 
-            if usd_rub < 20 or usd_rub > 200:
-                raise RuntimeError(f"CBR USD/RUB looks wrong: {usd_rub}")
-
-            return usd_rub
-
-    raise RuntimeError(f"USD not found in CBR response for {iso_date}")
+    if set(rates) != {"USD", "EUR"}:
+        raise RuntimeError(f"USD or EUR missing in CBR response for {iso_date}")
+    if not 20 <= rates["USD"] <= 200:
+        raise RuntimeError(f"CBR USD/RUB looks wrong: {rates['USD']}")
+    return rates
 
 
 def empty_naver_data():
@@ -343,7 +346,9 @@ def main():
         bok_usd_krw, bok_source_date = last_bok_value_on_or_before(bok, dt)
 
         try:
-            cbr_usd_rub = fetch_cbr_usd_rub(dt)
+            cbr_rates = fetch_cbr_rates(dt)
+            cbr_usd_rub = cbr_rates["USD"]
+            cbr_eur_rub = cbr_rates["EUR"]
         except Exception as exc:
             old_cbr = (
                 existing_value_for_date(existing_rows, dt, "cbr_usd_rub")
@@ -355,6 +360,9 @@ def main():
 
             print(f"Warning: failed to fetch CBR for {dt}. Using existing value {old_cbr}: {exc}")
             cbr_usd_rub = float(old_cbr)
+            # Only reuse EUR for this exact date; never relabel an older quote.
+            old_row = next((r for r in existing_rows if r.get("date") == dt), {})
+            cbr_eur_rub = old_row.get("cbr_eur_rub")
 
         calc_rub_krw = bok_usd_krw / cbr_usd_rub
         calc_series.append(calc_rub_krw)
@@ -364,6 +372,7 @@ def main():
             "bok_source_date": bok_source_date,
             "bok_usd_krw": round(bok_usd_krw, 4),
             "cbr_usd_rub": round(cbr_usd_rub, 6),
+            "cbr_eur_rub": round(cbr_eur_rub, 6) if cbr_eur_rub is not None else None,
             "calc_rub_krw": round(calc_rub_krw, 6),
             "krw_1_5m_to_rub": round(1500000 / calc_rub_krw),
             "usd_rub": round(cbr_usd_rub, 6),
@@ -413,6 +422,7 @@ def main():
     print(f"Latest date: {rows[-1]['date']}")
     print(f"Latest BOK source date: {rows[-1]['bok_source_date']}")
     print(f"Latest CBR USD/RUB: {rows[-1]['cbr_usd_rub']}")
+    print(f"Latest CBR EUR/RUB: {rows[-1].get('cbr_eur_rub')}")
     print(f"Latest Naver RUB/KRW: {rows[-1].get('naver_rub_krw')}")
 
 

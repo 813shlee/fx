@@ -39,12 +39,7 @@ th{color:#94a3b8}
   color:#94a3b8;
   font-weight:normal;
 }
-.panel{background:#1e293b;padding:22px;border-radius:16px;margin-top:20px}
-.formula{color:#cbd5e1;font-size:16px;line-height:1.8;margin-bottom:16px}
-input{padding:12px;margin:6px;width:260px;border-radius:8px;border:none;font-size:16px}
 button{padding:12px 18px;border:none;border-radius:10px;background:#2563eb;color:white;cursor:pointer;font-size:16px;margin-top:10px}
-.result{margin-top:16px;font-size:17px;text-align:left;line-height:1.7;background:#0b1220;padding:16px;border-radius:12px}
-.sub-panel{background:#111827;border-radius:14px;padding:18px;margin-top:16px}
 
 .naver-box{background:#111827;border-radius:16px;padding:20px;margin:20px 0 24px;text-align:left;line-height:1.7}
 .naver-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
@@ -90,10 +85,9 @@ button{padding:12px 18px;border:none;border-radius:10px;background:#2563eb;color
   <th>Date</th>
   <th>USD/KRW<br><span class="subhead">BOK</span></th>
   <th>USD/RUB<br><span class="subhead">CBR</span></th>
-  <th>RUB/KRW<br><span class="subhead">CALC</span></th>
   <th>RUB/KRW<br><span class="subhead">NAVER</span></th>
+  <th>EUR/RUB<br><span class="subhead">CBR</span></th>
   <th>150만원 → ? RUB</th>
-  <th>Score</th>
   <th>Signal</th>
 </tr>
 </thead>
@@ -101,40 +95,11 @@ button{padding:12px 18px;border:none;border-radius:10px;background:#2563eb;color
 </table>
 </div>
 
-<div class="section-title">💱 실제 환전소 기준 환산 계산</div>
+<button onclick="location.href='?v=' + Date.now()">🔄 최신 데이터 다시 불러오기</button>
 
-<div class="panel">
-  <div class="formula">
-    기준: <b>BOK USD/KRW</b>를 기준으로 달러 환전소와 원화 환전소의 대응값을 계산합니다.<br>
-    ① <b>USD → RUB</b> 환율을 입력하면, 같은 수준의 <b>RUB → KRW</b> 값을 계산<br>
-    ② <b>RUB → KRW</b> 환율을 입력하면, 같은 수준의 <b>USD → RUB</b> 값을 계산<br>
-    ※ 어느 쪽 환전소가 더 좋은지 비교할 때 기준선으로 사용합니다.
-  </div>
-
-  <div class="sub-panel">
-    <h3>달러 환전소 기준</h3>
-    <input id="usdRubInput" type="number" step="0.0001" placeholder="1 USD → RUB 예: 75.0">
-    <button onclick="calcFromUsdRub()">대응 원/루블 계산</button>
-    <div class="result" id="usdRubResult">입력 대기 중</div>
-  </div>
-
-  <div class="sub-panel">
-    <h3>원화 환전소 기준</h3>
-    <input id="rubKrwInput" type="number" step="0.0001" placeholder="1 RUB → KRW 예: 20.0">
-    <button onclick="calcFromRubKrw()">대응 달러/루블 계산</button>
-    <div class="result" id="rubKrwResult">입력 대기 중</div>
-  </div>
-
-  <br>
-
-  <button onclick="location.href='?v=' + Date.now()">
-    🔄 최신 데이터 다시 불러오기
-  </button>
-</div>
 </div>
 
 <script>
-let latestGlobal=null;
 
 function fmt(n,d=2){
   if(n===null || n===undefined || n==="" || Number.isNaN(Number(n))) return "-";
@@ -217,7 +182,6 @@ fetch("rates.json?v="+Date.now())
 .then(r=>r.json())
 .then(data=>{
   const latest=data[data.length-1];
-  latestGlobal=latest;
 
   const bok=Number(latest.bok_usd_krw);
   const usdRub=normalizeUsdRub(latest.cbr_usd_rub ?? latest.usd_rub);
@@ -271,10 +235,9 @@ fetch("rates.json?v="+Date.now())
         <td>${d.date}</td>
         <td>${fmt(d.bok_usd_krw,2)}</td>
         <td>${fmt(usdRubRow,2)}</td>
-        <td>${fmt(krwRubRow,2)}</td>
         <td>${fmt(d.naver_rub_krw,2)}</td>
+        <td>${fmt(d.cbr_eur_rub,2)}</td>
         <td>${intFmt(1500000/krwRubRow)}</td>
-        <td>${d.score ?? "-"}</td>
         <td class="${rowSignalClass}">${rowSignal}</td>
       </tr>`;
   });
@@ -285,55 +248,6 @@ fetch("rates.json?v="+Date.now())
   document.getElementById("naverInfo").innerText="네이버 환율 정보 로딩 실패";
 });
 
-function calcFromUsdRub(){
-  const usdRub=Number(document.getElementById("usdRubInput").value);
-  if(!usdRub){
-    document.getElementById("usdRubResult").innerHTML="USD/RUB 값을 입력하세요.";
-    return;
-  }
-  if(!latestGlobal){
-    document.getElementById("usdRubResult").innerHTML="기준 환율 데이터를 아직 불러오지 못했습니다.";
-    return;
-  }
-
-  const bokUsdKrw=Number(latestGlobal.bok_usd_krw);
-  const impliedRubKrw=bokUsdKrw/usdRub;
-  const calcRubKrw=Number(latestGlobal.calc_rub_krw ?? latestGlobal.krw_rub);
-  const diff=impliedRubKrw-calcRubKrw;
-
-  document.getElementById("usdRubResult").innerHTML=`
-    <b>입력:</b> 1 USD = ${fmt(usdRub,4)} RUB<br><br>
-    <b>계산식</b><br>
-    BOK ${fmt(bokUsdKrw,2)} KRW/USD ÷ ${fmt(usdRub,4)} RUB/USD<br>
-    = <b>1 RUB = ${fmt(impliedRubKrw,4)} KRW</b><br><br>
-    중앙은행 계산값(CALC) 대비: <b>${diff>=0?"+":""}${fmt(diff,4)} KRW</b>
-  `;
-}
-
-function calcFromRubKrw(){
-  const rubKrw=Number(document.getElementById("rubKrwInput").value);
-  if(!rubKrw){
-    document.getElementById("rubKrwResult").innerHTML="RUB/KRW 값을 입력하세요.";
-    return;
-  }
-  if(!latestGlobal){
-    document.getElementById("rubKrwResult").innerHTML="기준 환율 데이터를 아직 불러오지 못했습니다.";
-    return;
-  }
-
-  const bokUsdKrw=Number(latestGlobal.bok_usd_krw);
-  const impliedUsdRub=bokUsdKrw/rubKrw;
-  const cbrUsdRub=Number(latestGlobal.cbr_usd_rub ?? latestGlobal.usd_rub);
-  const diff=impliedUsdRub-cbrUsdRub;
-
-  document.getElementById("rubKrwResult").innerHTML=`
-    <b>입력:</b> 1 RUB = ${fmt(rubKrw,4)} KRW<br><br>
-    <b>계산식</b><br>
-    BOK ${fmt(bokUsdKrw,2)} KRW/USD ÷ ${fmt(rubKrw,4)} KRW/RUB<br>
-    = <b>1 USD = ${fmt(impliedUsdRub,4)} RUB</b><br><br>
-    CBR USD/RUB 대비: <b>${diff>=0?"+":""}${fmt(diff,4)} RUB</b>
-  `;
-}
 </script>
 </body>
 </html>
