@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-11-07",
-    "bok_source_date": "2026-11-06",
-    "bok_usd_krw": 1342.0,
-    "cbr_usd_rub": 82.1386,
-    "cbr_eur_rub": 92.1924,
-    "calc_rub_krw": 16.338238,
-    "krw_1_5m_to_rub": 91809,
-    "usd_rub": 82.1386,
-    "krw_rub": 16.338238,
-    "naver_rub_krw": 16.65,
-    "naver_change": 0.0,
-    "naver_change_pct": "0.00%",
-    "naver_time": "2026.11.07 06:19",
-    "score": 60,
-    "signal": "■ NORMAL"
-  },
-  {
     "date": "2026-11-08",
     "bok_source_date": "2026-11-06",
     "bok_usd_krw": 1342.0,
@@ -47,7 +30,7 @@
     "naver_change": -0.38,
     "naver_change_pct": "-2.28%",
     "naver_time": "2026.11.10 05:36",
-    "score": 50,
+    "score": 52,
     "signal": "■ NORMAL"
   },
   {
@@ -64,7 +47,7 @@
     "naver_change": -0.12,
     "naver_change_pct": "-0.74%",
     "naver_time": "2026.11.11 04:25",
-    "score": 60,
+    "score": 61,
     "signal": "■ NORMAL"
   },
   {
@@ -81,7 +64,7 @@
     "naver_change": 0.02,
     "naver_change_pct": "0.12%",
     "naver_time": "2026.11.12 04:23",
-    "score": 66,
+    "score": 67,
     "signal": "● GOOD"
   },
   {
@@ -132,7 +115,7 @@
     "naver_change": 0.06,
     "naver_change_pct": "0.37%",
     "naver_time": "2026.11.14 18:42",
-    "score": 66,
+    "score": 65,
     "signal": "● GOOD"
   },
   {
@@ -166,7 +149,28 @@
     "naver_change": 0.01,
     "naver_change_pct": "0.06%",
     "naver_time": "2026.11.17 06:38",
-    "score": 64,
+    "score": 63,
     "signal": "■ NORMAL"
+  },
+  {
+    "date": "2026-11-17",
+    "bok_source_date": "2026-11-17",
+    "bok_usd_krw": 1335.0,
+    "cbr_usd_rub": 82.5143,
+    "cbr_eur_rub": 91.1948,
+    "calc_rub_krw": 16.179014,
+    "krw_1_5m_to_rub": 92713,
+    "usd_rub": 82.5143,
+    "krw_rub": 16.179014,
+    "naver_rub_krw": 16.2,
+    "naver_change": 0.01,
+    "naver_change_pct": "0.06%",
+    "naver_time": "2026.11.17 21:46",
+    "naver_cash_buy": 17.73,
+    "naver_cash_sell": 13.37,
+    "naver_send": 16.76,
+    "naver_receive": 15.64,
+    "score": 67,
+    "signal": "● GOOD"
   }
 ]
